@@ -55,3 +55,21 @@ class TestStartPage:
         Assert.true(home_page.is_password_required)
         Assert.true(home_page.is_display_name_required)
         Assert.true(home_page.is_privacy_policy_acceptance_required)
+
+    def test_registration_with_invalid_email_address(self, mozwebqa):
+        home_page = AffiliatesHomePage(mozwebqa)
+        home_page.set_display_name("John Doe")
+        home_page.set_email_address("thisisinvalid")
+        home_page.set_password("validpassword1")
+        home_page.check_agreement_checkbox()
+        home_page.click_register_button()
+        Assert.true(home_page.is_valid_email_address_required)
+
+    def test_registration_with_insecure_password(self, mozwebqa):
+        home_page = AffiliatesHomePage(mozwebqa)
+        home_page.set_display_name("John Doe")
+        home_page.set_email_address("validemail@example.com")
+        home_page.set_password("invalidwithoutnumber")
+        home_page.check_agreement_checkbox()
+        home_page.click_register_button()
+        Assert.true(home_page.is_insecure_password_warning_present)
