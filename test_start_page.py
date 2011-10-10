@@ -47,3 +47,11 @@ class TestStartPage:
         home_page = AffiliatesHomePage(mozwebqa)
         home_page.hover_over_learn_more_link()
         Assert.true(home_page.is_learn_more_tooltip_visible)
+
+    def test_registration_with_blank_form_data(self, mozwebqa):
+        home_page = AffiliatesHomePage(mozwebqa)
+        home_page.click_register_button()
+        Assert.true(home_page.is_email_address_required)
+        Assert.true(home_page.is_password_required)
+        Assert.true(home_page.is_display_name_required)
+        Assert.true(home_page.is_privacy_policy_acceptance_required)
