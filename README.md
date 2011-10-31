@@ -60,7 +60,7 @@ For more command-line options access https://github.com/davehunt/pytest-mozwebqa
 Writing Tests
 -------------
 
-If you want to get involved and add more tests then there's just a few things
+If you want to get involved and add more tests, then there's just a few things
 we'd like to ask you to do:
 
 1. Use the [template files][GitHub Templates] for all new tests and page objects
