@@ -12,7 +12,7 @@ You will need a version of the [Java Runtime Environment][JRE] installed
 [JRE]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 ### Python
-Before you will be able to run these tests you will need to have Python 2.6 installed.
+Before you will be able to run these tests, you need to have Python 2.6 installed.
 
 Run
 
@@ -24,7 +24,7 @@ followed by
     
 __note__
 
-If you are running on Ubuntu/Debian you will need to do following first
+If you are running on Ubuntu/Debian you will need to do following first:
 
     sudo apt-get install python-setuptools
     
@@ -55,7 +55,7 @@ To run the user accounts tests:
 
 		py.test --credentials=~/credentials.yaml
 
-For more command line options access https://github.com/davehunt/pytest-mozwebqa
+For more command-line options access https://github.com/davehunt/pytest-mozwebqa
 
 Writing Tests
 -------------
