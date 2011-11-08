@@ -56,7 +56,7 @@ class AffiliatesHomePage(AffiliatesBasePage):
 
     _display_name_field_locator = 'id=id_display_name'
     _email_field_locator = 'id=id_email'
-    _password_field_locator = 'css=#register-form #id_password'
+    _password_field_locator = 'id=id_registration_password'
     _agreement_checkbox_locator = 'id=id_agreement'
     _register_button_locator = 'css=#register-form .register'
     _forgot_password_link_locator = 'css=#login-form a[href*="forgot_password"]'
