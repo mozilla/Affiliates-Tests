@@ -36,11 +36,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-import re
-
-from datetime import datetime
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 
 from pages.start_page import StartPage
 
@@ -51,9 +47,12 @@ class Home(StartPage):
     _page_header = 'Follow these easy steps to get started:'
 
     #LoggedIn
-    _logout_locator = (By.CSS_SELECTOR, 'li.nomenu.logout > a')
-    _edit_profile_locator = (By.CSS_SELECTOR, 'li.nomenu.logout > a')
+    _logout_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(1) a')
+    _edit_profile_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(2) a')
 
+    @property
+    def is_user_logged_in(self):
+        return self.is_element_visible(*self._logout_locator)
 
     def click_logout(self):
         self.selenium.find_element(*self._logout_locator).click()

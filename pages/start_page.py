@@ -45,22 +45,22 @@ from page import Page
 
 class StartPage(Page):
 
-    _page_title = 'Firefox Affiliates - Mozilla Firefox'
+    _page_title = 'Firefox Affiliates'
 
     _learn_more_link_locator = (By.CSS_SELECTOR, '#content .show_tooltip')
     _learn_more_tooltip_locator = (By.ID, 'tooltip_home')
-    _mozilla_logo_link_locator = (By.CSS_SELECTOR, "#header a")
-    _footer_locator = (By.CSS_SELECTOR, "#footer")
-    _page_header_locator = (By.CSS_SELECTOR, ".header h2")
+    _mozilla_logo_link_locator = (By.CSS_SELECTOR, '#header a')
+    _footer_locator = (By.CSS_SELECTOR, '#footer')
+    _page_header_locator = (By.CSS_SELECTOR, '.header h2')
 
     #Not LoggedIn
-    _login_browser_id_locator = (By.CSS_SELECTOR, "a.browserid-login")
-    _register_locator = (By.CSS_SELECTOR, "#aux-nav li.account a:nth-child(1)")
+    _login_browser_id_locator = (By.CSS_SELECTOR, '.browserid:nth-of-type(1)')
+    _register_locator = (By.CSS_SELECTOR, '.browserid:nth-of-type(1)')
 
     #LoggedIn
-    _account_controller_locator = (By.CSS_SELECTOR, "#aux-nav .account a.user")
-    _account_dropdown_locator = (By.CSS_SELECTOR, "#aux-nav .account ul")
-    _logout_locator = (By.CSS_SELECTOR, "li.nomenu.logout > a")
+    _account_controller_locator = (By.CSS_SELECTOR, '#aux-nav .account a.user')
+    _account_dropdown_locator = (By.CSS_SELECTOR, '#aux-nav .account ul')
+    _logout_locator = (By.CSS_SELECTOR, 'li.nomenu.logout > a')
 
     def __init__(self, testsetup, open_url=True):
         ''' Creates a new instance of the class and gets the page ready for testing '''
@@ -68,20 +68,14 @@ class StartPage(Page):
         if open_url:
             self.selenium.get(self.base_url)
 
-    def login(self, user="default"):
-        login = self.header.click_login_browser_id()
-        login.login_user_browser_id(user)
-        from pages.home import Home
-        return Home(self.testsetup)
+    def login(self):
+        login = self.click_login_browser_id()
+        login.login_user_browser_id('default')
 
     def click_login_browser_id(self):
         self.selenium.find_element(*self._login_browser_id_locator).click()
         from pages.user import Login
         return Login(self.testsetup)
-
-    @property
-    def is_user_logged_in(self):
-        return self.is_element_visible(*self._account_controller_locator)
 
     @property
     def page_title(self):

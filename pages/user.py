@@ -114,7 +114,7 @@ class EditProfile(StartPage):
 
     @property
     def get_input_text_for(self, for_field):
-        return self.selenium.find_element(*getattr(self, "_%s_locator" % for_field)).text
+        return self.selenium.find_element(*getattr(self, '_%s_locator' % for_field)).text
 
     @property
     def get_label_text_for(self, for_label):

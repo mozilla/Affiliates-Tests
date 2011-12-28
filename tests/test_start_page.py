@@ -47,6 +47,17 @@ class TestStartPage:
 
     @nondestructive    
     def test_learn_more_tooltip_visibility(self, mozwebqa):
-        home_page = StartPage(mozwebqa)
-        home_page.hover_over_learn_more_link()
-        Assert.true(home_page.is_learn_more_tooltip_visible)
+        start_page = StartPage(mozwebqa)
+        start_page.hover_over_learn_more_link()
+        Assert.true(start_page.is_learn_more_tooltip_visible)
+
+    @nondestructive    
+    def test_start_page_has_proper_title(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        Assert.true(start_page.is_the_current_page)
+
+    @nondestructive    
+    def test_login_logout_works_properly(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+        Assert.true(home_page.is_user_logged_in, 'User not logged in')
