@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 # ***** BEGIN LICENSE BLOCK *****
 # Version: MPL 1.1/GPL 2.0/LGPL 2.1
 #
@@ -19,7 +20,7 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s):
+# Contributor(s): 
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,20 +36,30 @@
 #
 # ***** END LICENSE BLOCK *****
 
-from selenium import selenium
 import re
-import time
-import base64
-from page import Page
 
-class AffiliatesBasePage(Page):
+from datetime import datetime
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 
-    def __init__(self, testsetup):
-        Page.__init__(self, testsetup)
-        self.sel = self.selenium
-        self.sel.open("/")
+from pages.start_page import StartPage
 
-    @property
-    def page_title(self):
-        return self.sel.get_title()
 
+class Home(StartPage):
+
+    _page_title = 'Firefox Affiliates - Mozilla Firefox'
+    _page_header = 'Follow these easy steps to get started:'
+
+    #LoggedIn
+    _logout_locator = (By.CSS_SELECTOR, 'li.nomenu.logout > a')
+    _edit_profile_locator = (By.CSS_SELECTOR, 'li.nomenu.logout > a')
+
+
+    def click_logout(self):
+        self.selenium.find_element(*self._logout_locator).click()
+
+    def click_edit_profile(self):
+        self.selenium.find_element(*self._edit_profile_locator).click()
+
+        from pages.user import EditProfile
+        return EditProfile(self.testsetup)

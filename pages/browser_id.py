@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 # ***** BEGIN LICENSE BLOCK *****
 # Version: MPL 1.1/GPL 2.0/LGPL 2.1
 #
@@ -19,7 +20,8 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s):
+# Contributor(s): Bebe <florin.strugariu@softvision.ro>
+#                 Teodosia Pop <teodosia.pop@softvision.ro>
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,20 +37,33 @@
 #
 # ***** END LICENSE BLOCK *****
 
-from selenium import selenium
-import re
-import time
-import base64
-from page import Page
 
-class AffiliatesBasePage(Page):
+from page import Page
+from selenium.webdriver.common.by import By
+
+class BrowserID(Page):
+
+    _pop_up_id = '_mozid_signin'
+    _email_locator = (By.ID, 'email')
+    _password_locator = (By.ID, 'password')
+
+    _log_in_button_locator = (By.CSS_SELECTOR, 'button.returning')
+    _next_button_locator = (By.CSS_SELECTOR, 'button.start')
+    _sign_in_locator = (By.ID, 'signInButton')
 
     def __init__(self, testsetup):
         Page.__init__(self, testsetup)
-        self.sel = self.selenium
-        self.sel.open("/")
+        self.selenium.switch_to_window(self._pop_up_id)
 
-    @property
-    def page_title(self):
-        return self.sel.get_title()
+    def login_browser_id(self, user):
+        credentials = self.testsetup.credentials[user]
 
+        self.selenium.find_element(*self._email_locator).send_keys(credentials['email'])
+        self.selenium.find_element(*self._next_button_locator).click()
+
+        self.selenium.find_element(*self._password_locator).send_keys(credentials['password'])
+        self.selenium.find_element(*self._log_in_button_locator).click()
+
+    def sign_in(self):
+        self.selenium.find_element(*self._sign_in_locator).click()
+        self.selenium.switch_to_window('')

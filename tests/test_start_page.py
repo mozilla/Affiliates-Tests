@@ -36,40 +36,17 @@
 #
 # ***** END LICENSE BLOCK *****
 
-from affiliates_page import AffiliatesBasePage
-from affiliates_page import AffiliatesHomePage
+from pages.start_page import StartPage
 from unittestzero import Assert
+
 import pytest
+
+nondestructive = pytest.mark.nondestructive
 
 class TestStartPage:
 
+    @nondestructive    
     def test_learn_more_tooltip_visibility(self, mozwebqa):
-        home_page = AffiliatesHomePage(mozwebqa)
+        home_page = StartPage(mozwebqa)
         home_page.hover_over_learn_more_link()
         Assert.true(home_page.is_learn_more_tooltip_visible)
-
-    def test_registration_with_blank_form_data(self, mozwebqa):
-        home_page = AffiliatesHomePage(mozwebqa)
-        home_page.click_register_button()
-        Assert.true(home_page.is_email_address_required)
-        Assert.true(home_page.is_password_required)
-        Assert.true(home_page.is_display_name_required)
-        Assert.true(home_page.is_privacy_policy_acceptance_required)
-
-    def test_registration_with_invalid_email_address(self, mozwebqa):
-        home_page = AffiliatesHomePage(mozwebqa)
-        home_page.set_display_name("John Doe")
-        home_page.set_email_address("thisisinvalid")
-        home_page.set_password("validpassword1")
-        home_page.check_agreement_checkbox()
-        home_page.click_register_button()
-        Assert.true(home_page.is_valid_email_address_required)
-
-    def test_registration_with_insecure_password(self, mozwebqa):
-        home_page = AffiliatesHomePage(mozwebqa)
-        home_page.set_display_name("John Doe")
-        home_page.set_email_address("validemail@example.com")
-        home_page.set_password("invalidwithoutnumber")
-        home_page.check_agreement_checkbox()
-        home_page.click_register_button()
-        Assert.true(home_page.is_insecure_password_warning_present)
