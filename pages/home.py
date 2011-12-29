@@ -38,10 +38,10 @@
 
 from selenium.webdriver.common.by import By
 
-from pages.start_page import StartPage
+from page import Page
 
 
-class Home(StartPage):
+class Home(Page):
 
     _page_title = 'Firefox Affiliates - Mozilla Firefox'
     _page_header = 'Follow these easy steps to get started:'
@@ -59,6 +59,5 @@ class Home(StartPage):
 
     def click_edit_profile(self):
         self.selenium.find_element(*self._edit_profile_locator).click()
-
         from pages.user import EditProfile
         return EditProfile(self.testsetup)

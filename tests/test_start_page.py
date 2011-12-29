@@ -52,12 +52,24 @@ class TestStartPage:
         Assert.true(start_page.is_learn_more_tooltip_visible)
 
     @nondestructive    
-    def test_start_page_has_proper_title(self, mozwebqa):
+    def test_start_page_has_proper_titles(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         Assert.true(start_page.is_the_current_page)
+        Assert.true(start_page.is_the_current_page_header)
 
     @nondestructive    
     def test_login_logout_works_properly(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
         Assert.true(home_page.is_user_logged_in, 'User not logged in')
+        Assert.true(home_page.is_the_current_page_header)
+        home_page.click_logout()
+        Assert.false(home_page.is_user_logged_in, 'User logged in')
+        Assert.true(start_page.is_the_current_page_header)
+
+    @nondestructive    
+    def test_start_page_logo_twitter_facebook_present(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        Assert.true(start_page.is_mozilla_logo_visible)
+        Assert.true(start_page.is_twitter_button_present)
+        Assert.true(start_page.is_facebook_button_present)

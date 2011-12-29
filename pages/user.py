@@ -38,12 +38,11 @@
 # ***** END LICENSE BLOCK *****
 
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 
-from pages.start_page import StartPage
+from page import Page
 
 
-class Login(StartPage):
+class Login(Page):
 
     _login_browser_id_locator = (By.CSS_SELECTOR, '.browserid:nth-of-type(1)')
 
@@ -54,7 +53,7 @@ class Login(StartPage):
         pop_up.sign_in()
 
 
-class Register(StartPage):
+class Register(Page):
 
     _register_browser_id_locator = (By.CSS_SELECTOR, '.browserid:nth-of-type(2)')
     _display_name_field_locator = (By.ID, 'id_display_name')
@@ -87,7 +86,7 @@ class Register(StartPage):
         return self.is_warning_present(self._privacy_policy_warning)
 
 
-class User(StartPage):
+class User(Page):
 
         _username_locator = (By.CSS_SELECTOR, '#user-info div')
 
@@ -96,7 +95,7 @@ class User(StartPage):
             return self.selenium.find_element(*self._username_locator).text
 
 
-class EditProfile(StartPage):
+class EditProfile(Page):
 
     _page_header = 'Edit your user profile'
 
@@ -116,6 +115,9 @@ class EditProfile(StartPage):
     def get_input_text_for(self, for_field):
         return self.selenium.find_element(*getattr(self, '_%s_locator' % for_field)).text
 
+    def set_input_text_for(self, for_field, value):
+        self.selenium.find_element(*getattr(self, '_%s_locator' % for_field)).send_keys(value)
+    
     @property
     def get_label_text_for(self, for_label):
         locator = getattr(self, "_%s_locator" % for_label)

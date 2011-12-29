@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+#!/usr/bin/env python
 # ***** BEGIN LICENSE BLOCK *****
 # Version: MPL 1.1/GPL 2.0/LGPL 2.1
 #
@@ -17,11 +17,10 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla.
-# Portions created by the Initial Developer are Copyright (C) 2011
+# Portions created by the Initial Developer are Copyright (C) 2010
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): Bebe <florin.strugariu@softvision.ro>
-#                 Teodosia Pop <teodosia.pop@softvision.ro>
+# Contributor(s):
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -37,37 +36,22 @@
 #
 # ***** END LICENSE BLOCK *****
 
+from pages.start_page import StartPage
+from unittestzero import Assert
 
-from page import Page
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+import pytest
 
-class BrowserID(Page):
+nondestructive = pytest.mark.nondestructive
+destructive = pytest.mark.destructive
 
-    _pop_up_id = '_mozid_signin'
-    _email_locator = (By.ID, 'email')
-    _password_locator = (By.ID, 'password')
-
-    _log_in_button_locator = (By.CSS_SELECTOR, 'button.returning')
-    _next_button_locator = (By.CSS_SELECTOR, 'button.start')
-    _sign_in_locator = (By.ID, 'signInButton')
-    
-    _home_logout_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(1) a')
-
-    def __init__(self, testsetup):
-        Page.__init__(self, testsetup)
-        self.selenium.switch_to_window(self._pop_up_id)
-
-    def login_browser_id(self, user):
-        credentials = self.testsetup.credentials[user]
-
-        self.selenium.find_element(*self._email_locator).send_keys(credentials['email'])
-        self.selenium.find_element(*self._next_button_locator).click()
-
-        self.selenium.find_element(*self._password_locator).send_keys(credentials['password'])
-        self.selenium.find_element(*self._log_in_button_locator).click()
-
-    def sign_in(self):
-        self.selenium.find_element(*self._sign_in_locator).click()
-        self.selenium.switch_to_window('')
-        WebDriverWait(self.selenium, 10).until(lambda s: self.selenium.find_element(*self._home_logout_locator)) 
+class TestHomePage:
+  
+    def test_edit_profile_change_display_name(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+        credentials = mozwebqa.credentials['default']['name']     
+        
+        edit_page = home_page.click_edit_profile()
+        Assert.true(edit_page.is_the_current_page_header)
+        Assert.equal(edit_page.get_input_text_for('display_name'), credentials)
+        
