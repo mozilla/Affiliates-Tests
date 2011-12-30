@@ -43,21 +43,22 @@ import pytest
 
 nondestructive = pytest.mark.nondestructive
 
+
 class TestStartPage:
 
-    @nondestructive    
+    @nondestructive
     def test_learn_more_tooltip_visibility(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         start_page.hover_over_learn_more_link()
         Assert.true(start_page.is_learn_more_tooltip_visible)
 
-    @nondestructive    
+    @nondestructive
     def test_start_page_has_proper_titles(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         Assert.true(start_page.is_the_current_page)
         Assert.true(start_page.is_the_current_page_header)
 
-    @nondestructive    
+    @nondestructive
     def test_login_logout_works_properly(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
@@ -67,7 +68,7 @@ class TestStartPage:
         Assert.false(home_page.is_user_logged_in, 'User logged in')
         Assert.true(start_page.is_the_current_page_header)
 
-    @nondestructive    
+    @nondestructive
     def test_start_page_logo_twitter_facebook_present(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         Assert.true(start_page.is_mozilla_logo_visible)

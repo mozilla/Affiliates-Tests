@@ -58,6 +58,7 @@ class TestHomePage:
         Assert.equal(edit_page.get_label_text_for('display_name'), 'DISPLAY NAME')
         Assert.equal(edit_page.get_input_text_for('display_name'), credentials)
 
+    @destructive
     def test_edit_profile_change_display_name(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
@@ -72,3 +73,37 @@ class TestHomePage:
         edit_page.set_input_text_for('display_name', new_name)
         edit_page.click_save_my_changes()
         Assert.equal(home_page.get_username, new_name)
+
+    @nondestructive
+    def test_about_page(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+
+        about_page = home_page.click_about_nav_button()
+        Assert.true(about_page.is_the_current_page_header)
+        Assert.true(home_page.get_url_current_page().endswith('/about'))
+        Assert.not_none(about_page.get_about_text)
+
+    @nondestructive
+    def test_faq_page(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+
+        faq_page = home_page.click_faq_nav_button()
+        Assert.true(faq_page.is_the_current_page_header)
+        Assert.true(home_page.get_url_current_page().endswith('/faq'))
+
+        Assert.true(faq_page.questions_count > 0)
+        #Pick one question from each section
+        for i in range(4):
+            i += 1
+            Assert.not_none(faq_page.questions_text)
+            faq_page.expand_question_by_section(i)
+            Assert.not_none(faq_page.answer(i))
+
+    @nondestructive
+    def test_get_started_3_steps(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+
+        Assert.true(home_page.get_url_current_page().endswith('/new'))

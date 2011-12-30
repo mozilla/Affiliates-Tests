@@ -20,7 +20,7 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): 
+# Contributor(s):
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,6 +35,8 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+
+import re
 
 from selenium.webdriver.common.by import By
 
@@ -51,6 +53,12 @@ class Home(Page):
     _edit_profile_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(2) a')
     _username_locator = (By.CSS_SELECTOR, '#user-info div')
 
+    #Content Navigation
+    _banners_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(1)')
+    _faq_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(2)')
+    _about_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(3)')
+    _banner_code_locator = (By.ID, 'badge_code')
+
     @property
     def is_user_logged_in(self):
         return self.is_element_visible(*self._logout_locator)
@@ -66,3 +74,69 @@ class Home(Page):
         self.selenium.find_element(*self._edit_profile_locator).click()
         from pages.user import EditProfile
         return EditProfile(self.testsetup)
+
+    def click_faq_nav_button(self):
+        self.selenium.find_element(*self._faq_content_nav_locator).click()
+        return self.FaqNavMenu(self.testsetup)
+
+    def click_about_nav_button(self):
+        self.selenium.find_element(*self._about_content_nav_locator).click()
+        return self.AboutNavMenu(self.testsetup)
+
+    def click_banners_nav_button(self):
+        self.selenium.find_element(*self._banners_content_nav_locator).click()
+        return self.MyBannersNavMenu(self.testsetup)
+
+    @property
+    def category_count(self):
+        return len(self.selenium.find_elements(*self._categories__locator))
+
+    def select_category(self):
+        return self.selenium.find_element(*self._categories__locator)
+
+    @property
+    def banner_html_code(self):
+        return self.selenium.find_element(*self._banner_code_locator).get_attribute('value')
+
+    @property
+    def banner_url(self):
+        return self._get_banner_href_from_code(self.banner_html_code)
+
+    def _get_banner_href_from_code(self, code):
+        #parses out extra certificate stuff from urls in staging only
+        return re.search('href="(.*?)"', code).group(1)
+
+    class FaqNavMenu(Page):
+
+        _page_header = 'FAQs'
+        _question_link_locator = (By.CSS_SELECTOR, '.faq_content h5')
+        _answer_locator = (By.CSS_SELECTOR, '.answer')
+
+        @property
+        def questions_count(self):
+            return len(self.selenium.find_elements(*self._question_link_locator))
+
+        @property
+        def questions_text(self):
+            return self.selenium.find_element(*self._question_link_locator).text
+
+        def answer(self, no):
+            return self.selenium.find_element(By.CSS_SELECTOR,
+                                              '.faq_content ul:nth-of-type(%s) .answer' % no).text
+
+        def expand_question_by_section(self, link_no):
+            self.selenium.find_element(By.CSS_SELECTOR,
+                                       '.faq_content ul:nth-of-type(%s) li:nth-of-type(1)' % link_no).click()
+
+    class AboutNavMenu(Page):
+
+        _page_header = 'About Affiliates'
+        _about_text_locator = (By.CSS_SELECTOR, '.about_content')
+
+        @property
+        def get_about_text(self):
+            return self.selenium.find_element(*self._about_text_locator).text
+
+    class MyBannersNavMenu(Page):
+
+        _page_header = 'These are the banners you\'ve created so far:'
