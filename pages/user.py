@@ -86,15 +86,6 @@ class Register(Page):
         return self.is_warning_present(self._privacy_policy_warning)
 
 
-class User(Page):
-
-        _username_locator = (By.CSS_SELECTOR, '#user-info div')
-
-        @property
-        def username(self):
-            return self.selenium.find_element(*self._username_locator).text
-
-
 class EditProfile(Page):
 
     _page_header = 'Edit your user profile'
@@ -111,17 +102,17 @@ class EditProfile(Page):
     _save_my_changes_locator = (By.CSS_SELECTOR, '.save_changes')
     _cancel_locator = (By.CSS_SELECTOR, '.button')
 
-    @property
     def get_input_text_for(self, for_field):
-        return self.selenium.find_element(*getattr(self, '_%s_locator' % for_field)).text
+        return self.selenium.find_element(*getattr(self, '_%s_locator' % for_field)).get_attribute('value')
 
     def set_input_text_for(self, for_field, value):
-        self.selenium.find_element(*getattr(self, '_%s_locator' % for_field)).send_keys(value)
-    
-    @property
+        input_field = self.selenium.find_element(*getattr(self, '_%s_locator' % for_field))
+        input_field.clear()
+        input_field.send_keys(value)
+
     def get_label_text_for(self, for_label):
         locator = getattr(self, "_%s_locator" % for_label)
-        return self.selenium.find_element(locator[0], 'label[for=\'%s\']' % locator[1]).text
+        return self.selenium.find_element(By.CSS_SELECTOR, 'label[for=\'%s\']' % locator[1]).text
 
     def click_save_my_changes(self):
         self.selenium.find_element(*self._save_my_changes_locator).click()

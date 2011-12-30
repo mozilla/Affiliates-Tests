@@ -44,14 +44,31 @@ import pytest
 nondestructive = pytest.mark.nondestructive
 destructive = pytest.mark.destructive
 
+
 class TestHomePage:
-  
+
+    @nondestructive
+    def test_edit_profile_has_proper_display_name(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+        credentials = mozwebqa.credentials['default']['name']
+
+        edit_page = home_page.click_edit_profile()
+        Assert.true(edit_page.is_the_current_page_header)
+        Assert.equal(edit_page.get_label_text_for('display_name'), 'DISPLAY NAME')
+        Assert.equal(edit_page.get_input_text_for('display_name'), credentials)
+
     def test_edit_profile_change_display_name(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
-        credentials = mozwebqa.credentials['default']['name']     
-        
         edit_page = home_page.click_edit_profile()
-        Assert.true(edit_page.is_the_current_page_header)
-        Assert.equal(edit_page.get_input_text_for('display_name'), credentials)
-        
+
+        edit_page.set_input_text_for('display_name', 'affiliates_name')
+        edit_page.click_cancel()
+        Assert.equal(home_page.get_username, mozwebqa.credentials['default']['name'])
+
+        home_page.click_edit_profile()
+        new_name = 'affiliates_name'
+        edit_page.set_input_text_for('display_name', new_name)
+        edit_page.click_save_my_changes()
+        Assert.equal(home_page.get_username, new_name)

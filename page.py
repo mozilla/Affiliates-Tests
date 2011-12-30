@@ -73,7 +73,7 @@ class Page(object):
     def is_the_current_page_header(self):
         _page_header_locator = (By.CSS_SELECTOR, '#content h2')
         header = self.selenium.find_element(*_page_header_locator)
-        
+
         if self._page_header:
             WebDriverWait(self.selenium, 10).until(lambda s: header)
 

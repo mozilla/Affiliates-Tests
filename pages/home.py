@@ -49,10 +49,15 @@ class Home(Page):
     #LoggedIn
     _logout_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(1) a')
     _edit_profile_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(2) a')
+    _username_locator = (By.CSS_SELECTOR, '#user-info div')
 
     @property
     def is_user_logged_in(self):
         return self.is_element_visible(*self._logout_locator)
+
+    @property
+    def get_username(self):
+        return self.selenium.find_element(*self._username_locator).text
 
     def click_logout(self):
         self.selenium.find_element(*self._logout_locator).click()
