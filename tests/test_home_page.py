@@ -107,6 +107,7 @@ class TestHomePage:
         home_page = start_page.login()
 
         Assert.true(home_page.get_url_current_page().endswith('/new'))
+        Assert.greater(home_page.category_count, 0, 'There is no categories in list')
         Assert.not_none(home_page.categories[0].name)
         Assert.true(home_page.is_step_button_selected('first'))
         #Select first Category in list
@@ -118,3 +119,14 @@ class TestHomePage:
         Assert.true(home_page.is_step_button_selected('third'))
         Assert.equal(home_page.banner_url, home_page.banner_preview_url)
         Assert.equal(home_page.banner_img_src, home_page.banner_preview_img_src)
+
+    @nondestructive
+    def test_change_banner_size_correct(self, mozwebqa):
+        size = '180x150'
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+
+        home_page.categories[0].select_category()
+        home_page.categories[0].select_category()
+        home_page.select_size(size)
+        Assert.contains(size, home_page.banner_html_code)

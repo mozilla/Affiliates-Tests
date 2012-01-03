@@ -61,6 +61,9 @@ class Home(Page):
     _banner_code_locator = (By.ID, 'badge_code')
     _banner_preview_locator = (By.CSS_SELECTOR, '#banner_preview')
     _step_buttons_locator = (By.CSS_SELECTOR, '.steps-buttons')
+    _size_selector_locator = (By.ID, 'size')
+    _color_selector_locator = (By.ID, 'color')
+    _language_selector_locator = (By.ID, 'language')
 
     @property
     def is_user_logged_in(self):
@@ -98,6 +101,11 @@ class Home(Page):
     def categories(self):
         return [self.Categories(self.testsetup, element)
                 for element in self.selenium.find_elements(*self._banner_categories_locator)]
+
+    def select_size(self, value):
+        option_locator = (By.CSS_SELECTOR, 'option[value^=\'%s\']' % value)
+        self.selenium.find_element(*self._size_selector_locator).click()
+        self.selenium.find_element(*option_locator).click()
 
     @property
     def banner_html_code(self):
