@@ -21,6 +21,7 @@
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Bebe <florin.strugariu@softvision.ro>
+#                 Sergey Tupchiy (tupchii.sergii@gmail.com)
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -83,11 +84,6 @@ class StartPage(Page):
     @property
     def is_facebook_button_present(self):
         return self.is_element_present(*self._facebook_button_locator)
-
-    @property
-    def page_title(self):
-        WebDriverWait(self.selenium, 10).until(lambda s: self.selenium.title)
-        return self.selenium.title
 
     @property
     def is_mozilla_logo_visible(self):

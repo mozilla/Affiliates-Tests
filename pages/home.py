@@ -20,7 +20,7 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s):
+# Contributor(s): Sergey Tupchiy (tupchii.sergii@gmail.com)
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -57,7 +57,10 @@ class Home(Page):
     _banners_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(1)')
     _faq_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(2)')
     _about_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(3)')
+    _banner_categories_locator = (By.CSS_SELECTOR, '#step-content li')
     _banner_code_locator = (By.ID, 'badge_code')
+    _banner_preview_locator = (By.CSS_SELECTOR, '#banner_preview')
+    _step_buttons_locator = (By.CSS_SELECTOR, '.steps-buttons')
 
     @property
     def is_user_logged_in(self):
@@ -89,10 +92,12 @@ class Home(Page):
 
     @property
     def category_count(self):
-        return len(self.selenium.find_elements(*self._categories__locator))
+        return len(self.selenium.find_elements(*self._banner_categories_locator))
 
-    def select_category(self):
-        return self.selenium.find_element(*self._categories__locator)
+    @property
+    def categories(self):
+        return [self.Categories(self.testsetup, element)
+                for element in self.selenium.find_elements(*self._banner_categories_locator)]
 
     @property
     def banner_html_code(self):
@@ -100,11 +105,29 @@ class Home(Page):
 
     @property
     def banner_url(self):
-        return self._get_banner_href_from_code(self.banner_html_code)
+        return self._get_banner_attribute_from_code(self.banner_html_code, 'href')
 
-    def _get_banner_href_from_code(self, code):
-        #parses out extra certificate stuff from urls in staging only
-        return re.search('href="(.*?)"', code).group(1)
+    @property
+    def banner_img_src(self):
+        return self._get_banner_attribute_from_code(self.banner_html_code, 'src')
+
+    def _get_banner_attribute_from_code(self, code, key):
+        return re.search('%s="(.*?)"' % key, code).group(1)
+
+    @property
+    def banner_preview_url(self):
+        _link = (By.CSS_SELECTOR, 'a')
+        return self.selenium.find_element(*self._banner_preview_locator).find_element(*_link).get_attribute('href')
+
+    @property
+    def banner_preview_img_src(self):
+        _img = (By.CSS_SELECTOR, 'img')
+        return self.selenium.find_element(*self._banner_preview_locator).\
+                                            find_element(*_img).get_attribute('src').replace(self.base_url, '')
+
+    def is_step_button_selected(self, button_no):
+        return self.is_element_present(By.CSS_SELECTOR,
+                                       '%s .%s.selected' % (self._step_buttons_locator[1], button_no))
 
     class FaqNavMenu(Page):
 
@@ -140,3 +163,18 @@ class Home(Page):
     class MyBannersNavMenu(Page):
 
         _page_header = 'These are the banners you\'ve created so far:'
+
+    class Categories(Page):
+
+        _name_locator = (By.CSS_SELECTOR, 'p')
+
+        def __init__(self, testsetup, element):
+            Page.__init__(self, testsetup)
+            self._root_element = element
+
+        @property
+        def name(self):
+            return self._root_element.find_element(*self._name_locator).text
+
+        def select_category(self):
+            self._root_element.find_element(*self._name_locator).click()

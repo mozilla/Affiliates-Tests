@@ -20,7 +20,7 @@
 # Portions created by the Initial Developer are Copyright (C) 2010
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s):
+# Contributor(s): Sergey Tupchiy (tupchii.sergii@gmail.com)
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -107,3 +107,14 @@ class TestHomePage:
         home_page = start_page.login()
 
         Assert.true(home_page.get_url_current_page().endswith('/new'))
+        Assert.not_none(home_page.categories[0].name)
+        Assert.true(home_page.is_step_button_selected('first'))
+        #Select first Category in list
+        home_page.categories[0].select_category()
+        Assert.true(home_page.is_step_button_selected('second'))
+        Assert.not_none(home_page.categories[0].name)
+        #Select first Banner in list
+        home_page.categories[0].select_category()
+        Assert.true(home_page.is_step_button_selected('third'))
+        Assert.equal(home_page.banner_url, home_page.banner_preview_url)
+        Assert.equal(home_page.banner_img_src, home_page.banner_preview_img_src)

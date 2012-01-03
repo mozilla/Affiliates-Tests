@@ -20,7 +20,9 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s):
+# Contributor(s): David Burns
+#                 Zac Campbell 
+#                 Sergey Tupchiy (tupchii.sergii@gmail.com)
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -59,6 +61,11 @@ class Page(object):
         self.base_url = testsetup.base_url
         self.selenium = testsetup.selenium
         self.timeout = testsetup.timeout
+
+    @property
+    def page_title(self):
+        WebDriverWait(self.selenium, 10).until(lambda s: self.selenium.title)
+        return self.selenium.title
 
     @property
     def is_the_current_page(self):
