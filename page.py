@@ -21,7 +21,7 @@
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): David Burns
-#                 Zac Campbell 
+#                 Zac Campbell
 #                 Sergey Tupchiy (tupchii.sergii@gmail.com)
 #
 # Alternatively, the contents of this file may be used under the terms of
@@ -43,7 +43,6 @@ Created on Jun 21, 2010
 '''
 from unittestzero import Assert
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementNotVisibleException
 
@@ -74,18 +73,6 @@ class Page(object):
 
         Assert.equal(self.selenium.title, self._page_title,
             "Expected page title: %s. Actual page title: %s" % (self._page_title, self.selenium.title))
-        return True
-
-    @property
-    def is_the_current_page_header(self):
-        _page_header_locator = (By.CSS_SELECTOR, '#content h2')
-        header = self.selenium.find_element(*_page_header_locator)
-
-        if self._page_header:
-            WebDriverWait(self.selenium, 10).until(lambda s: header)
-
-        Assert.equal(header.text.replace('\n', ' '), self._page_header,
-            "Expected page header: %s. Actual page header: %s" % (self._page_header, header.text))
         return True
 
     def get_url_current_page(self):

@@ -46,7 +46,6 @@ from page import Page
 class Home(Page):
 
     _page_title = 'Firefox Affiliates - Mozilla Firefox'
-    _page_header = 'Follow these easy steps to get started:'
 
     #LoggedIn
     _logout_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(1) a')
@@ -54,6 +53,7 @@ class Home(Page):
     _username_locator = (By.CSS_SELECTOR, '#user-info div')
 
     #Content Navigation
+    _page_header_locator = (By.CSS_SELECTOR, '#content h2')
     _banners_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(1)')
     _faq_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(2)')
     _about_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(3)')
@@ -66,11 +66,15 @@ class Home(Page):
     _language_selector_locator = (By.ID, 'language')
 
     @property
+    def header(self):
+        return self.selenium.find_element(*self._page_header_locator).text
+
+    @property
     def is_user_logged_in(self):
         return self.is_element_visible(*self._logout_locator)
 
     @property
-    def get_username(self):
+    def username(self):
         return self.selenium.find_element(*self._username_locator).text
 
     def click_logout(self):
@@ -129,7 +133,7 @@ class Home(Page):
 
     @property
     def banner_preview_img_src(self):
-        _img = (By.CSS_SELECTOR, 'img')
+        _img = (By.TAG_NAME, 'img')
         return self.selenium.find_element(*self._banner_preview_locator).\
                                             find_element(*_img).get_attribute('src').replace(self.base_url, '')
 
@@ -139,7 +143,6 @@ class Home(Page):
 
     class FaqNavMenu(Page):
 
-        _page_header = 'FAQs'
         _question_link_locator = (By.CSS_SELECTOR, '.faq_content h5')
         _answer_locator = (By.CSS_SELECTOR, '.answer')
 
@@ -151,9 +154,9 @@ class Home(Page):
         def questions_text(self):
             return self.selenium.find_element(*self._question_link_locator).text
 
-        def answer(self, no):
+        def answer(self, lookup):
             return self.selenium.find_element(By.CSS_SELECTOR,
-                                              '.faq_content ul:nth-of-type(%s) .answer' % no).text
+                                              '.faq_content ul:nth-of-type(%s) .answer' % lookup).text
 
         def expand_question_by_section(self, link_no):
             self.selenium.find_element(By.CSS_SELECTOR,
@@ -161,11 +164,10 @@ class Home(Page):
 
     class AboutNavMenu(Page):
 
-        _page_header = 'About Affiliates'
         _about_text_locator = (By.CSS_SELECTOR, '.about_content')
 
         @property
-        def get_about_text(self):
+        def about_text(self):
             return self.selenium.find_element(*self._about_text_locator).text
 
     class MyBannersNavMenu(Page):

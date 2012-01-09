@@ -56,17 +56,17 @@ class TestStartPage:
     def test_start_page_has_proper_titles(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         Assert.true(start_page.is_the_current_page)
-        Assert.true(start_page.is_the_current_page_header)
+        Assert.equal(start_page.header, 'Become a Firefox Affiliate Today!')
 
     @nondestructive
     def test_login_logout_works_properly(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
         Assert.true(home_page.is_user_logged_in, 'User not logged in')
-        Assert.true(home_page.is_the_current_page_header)
+        Assert.equal(home_page.header, 'Follow these easy steps to get started:')
         home_page.click_logout()
         Assert.false(home_page.is_user_logged_in, 'User logged in')
-        Assert.true(start_page.is_the_current_page_header)
+        Assert.equal(start_page.header, 'Become a Firefox Affiliate Today!')
 
     @nondestructive
     def test_start_page_logo_twitter_facebook_present(self, mozwebqa):

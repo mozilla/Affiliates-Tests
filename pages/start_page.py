@@ -47,8 +47,8 @@ from page import Page
 class StartPage(Page):
 
     _page_title = 'Firefox Affiliates'
-    _page_header = 'Become a Firefox Affiliate Today!'
 
+    _page_header_locator = (By.CSS_SELECTOR, '#content h2')
     _learn_more_link_locator = (By.CSS_SELECTOR, '#content .show_tooltip')
     _learn_more_tooltip_locator = (By.ID, 'tooltip_home')
     _mozilla_logo_link_locator = (By.CSS_SELECTOR, '#header a')
@@ -57,8 +57,8 @@ class StartPage(Page):
     _facebook_button_locator = (By.CSS_SELECTOR, '.button.share_facebook')
 
     #Not LoggedIn
-    _login_browser_id_locator = (By.CSS_SELECTOR, '.browserid:nth-of-type(1)')
-    _register_locator = (By.CSS_SELECTOR, '.browserid:nth-of-type(1)')
+    _login_browser_id_locator = (By.CSS_SELECTOR, '.browserid-button:nth-of-type(1) a')
+    _register_locator = (By.CSS_SELECTOR, '.browserid-button:nth-of-type(2) a')
 
     def __init__(self, testsetup, open_url=True):
         ''' Creates a new instance of the class and gets the page ready for testing '''
@@ -76,6 +76,10 @@ class StartPage(Page):
         self.selenium.find_element(*self._login_browser_id_locator).click()
         from pages.user import Login
         return Login(self.testsetup)
+
+    @property
+    def header(self):
+        return self.selenium.find_element(*self._page_header_locator).text.replace('\n', ' ')
 
     @property
     def is_twitter_button_present(self):

@@ -41,23 +41,25 @@
 
 from page import Page
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+
 
 class BrowserID(Page):
 
-    _pop_up_id = '_mozid_signin'
+    _browser_id_title = 'BrowserID'
     _email_locator = (By.ID, 'email')
     _password_locator = (By.ID, 'password')
 
     _log_in_button_locator = (By.CSS_SELECTOR, 'button.returning')
     _next_button_locator = (By.CSS_SELECTOR, 'button.start')
     _sign_in_locator = (By.ID, 'signInButton')
-    
-    _home_logout_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(1) a')
 
     def __init__(self, testsetup):
         Page.__init__(self, testsetup)
-        self.selenium.switch_to_window(self._pop_up_id)
+        all_window_handles = self.selenium.window_handles
+        for handle in all_window_handles:
+            self.selenium.switch_to_window(handle)
+            if self.selenium.title == self._browser_id_title:
+                break
 
     def login_browser_id(self, user):
         credentials = self.testsetup.credentials[user]
@@ -71,4 +73,3 @@ class BrowserID(Page):
     def sign_in(self):
         self.selenium.find_element(*self._sign_in_locator).click()
         self.selenium.switch_to_window('')
-        WebDriverWait(self.selenium, 10).until(lambda s: self.selenium.find_element(*self._home_logout_locator)) 

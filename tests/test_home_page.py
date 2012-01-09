@@ -54,7 +54,7 @@ class TestHomePage:
         credentials = mozwebqa.credentials['default']['name']
 
         edit_page = home_page.click_edit_profile()
-        Assert.true(edit_page.is_the_current_page_header)
+        Assert.equal(home_page.header, 'Edit your user profile')
         Assert.equal(edit_page.get_label_text_for('display_name'), 'DISPLAY NAME')
         Assert.equal(edit_page.get_input_text_for('display_name'), credentials)
 
@@ -62,17 +62,22 @@ class TestHomePage:
     def test_edit_profile_change_display_name(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
+        credentials = mozwebqa.credentials['default']['name']
         edit_page = home_page.click_edit_profile()
 
         edit_page.set_input_text_for('display_name', 'affiliates_name')
         edit_page.click_cancel()
-        Assert.equal(home_page.get_username, mozwebqa.credentials['default']['name'])
+        Assert.equal(home_page.username, credentials)
 
         home_page.click_edit_profile()
-        new_name = 'affiliates_name'
+        new_name = 'affiliates_test'
         edit_page.set_input_text_for('display_name', new_name)
         edit_page.click_save_my_changes()
-        Assert.equal(home_page.get_username, new_name)
+        Assert.equal(home_page.username, new_name)
+        #Back changes to normal
+        home_page.click_edit_profile()
+        edit_page.set_input_text_for('display_name', credentials)
+        edit_page.click_save_my_changes()
 
     @nondestructive
     def test_about_page(self, mozwebqa):
@@ -80,9 +85,9 @@ class TestHomePage:
         home_page = start_page.login()
 
         about_page = home_page.click_about_nav_button()
-        Assert.true(about_page.is_the_current_page_header)
+        Assert.equal(home_page.header, 'About Affiliates')
         Assert.true(home_page.get_url_current_page().endswith('/about'))
-        Assert.not_none(about_page.get_about_text)
+        Assert.not_none(about_page.about_text)
 
     @nondestructive
     def test_faq_page(self, mozwebqa):
@@ -90,7 +95,7 @@ class TestHomePage:
         home_page = start_page.login()
 
         faq_page = home_page.click_faq_nav_button()
-        Assert.true(faq_page.is_the_current_page_header)
+        Assert.equal(home_page.header, 'FAQs')
         Assert.true(home_page.get_url_current_page().endswith('/faq'))
 
         Assert.true(faq_page.questions_count > 0)

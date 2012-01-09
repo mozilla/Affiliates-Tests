@@ -39,19 +39,21 @@
 # ***** END LICENSE BLOCK *****
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 
 from page import Page
 
 
 class Login(Page):
 
-    _login_browser_id_locator = (By.CSS_SELECTOR, '.browserid:nth-of-type(1)')
+    _home_logout_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(1) a')
 
     def login_user_browser_id(self, user):
         from pages.browser_id import BrowserID
         pop_up = BrowserID(self.testsetup)
         pop_up.login_browser_id(user)
         pop_up.sign_in()
+        WebDriverWait(self.selenium, 10).until(lambda s: self.selenium.find_element(*self._home_logout_locator))
 
 
 class Register(Page):
@@ -88,8 +90,6 @@ class Register(Page):
 
 
 class EditProfile(Page):
-
-    _page_header = 'Edit your user profile'
 
     _display_name_locator = (By.ID, 'id_display_name')
     _full_name_locator = (By.ID, 'id_name')
