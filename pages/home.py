@@ -46,6 +46,7 @@ from page import Page
 class Home(Page):
 
     _page_title = 'Firefox Affiliates - Mozilla Firefox'
+    _page_url = '/new'
 
     #LoggedIn
     _logout_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(1) a')
@@ -143,6 +144,7 @@ class Home(Page):
 
     class FaqNavMenu(Page):
 
+        _page_url = '/faq'
         _question_link_locator = (By.CSS_SELECTOR, '.faq_content h5')
         _answer_locator = (By.CSS_SELECTOR, '.answer')
 
@@ -164,6 +166,7 @@ class Home(Page):
 
     class AboutNavMenu(Page):
 
+        _page_url = '/about'
         _about_text_locator = (By.CSS_SELECTOR, '.about_content')
 
         @property

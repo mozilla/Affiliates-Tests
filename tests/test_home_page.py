@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-#!/usr/bin/env python
 # ***** BEGIN LICENSE BLOCK *****
 # Version: MPL 1.1/GPL 2.0/LGPL 2.1
 #
@@ -51,23 +50,23 @@ class TestHomePage:
     def test_edit_profile_has_proper_display_name(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
-        credentials = mozwebqa.credentials['default']['name']
+        username = mozwebqa.credentials['default']['name']
 
         edit_page = home_page.click_edit_profile()
         Assert.equal(home_page.header, 'Edit your user profile')
         Assert.equal(edit_page.get_label_text_for('display_name'), 'DISPLAY NAME')
-        Assert.equal(edit_page.get_input_text_for('display_name'), credentials)
+        Assert.equal(edit_page.get_input_text_for('display_name'), username)
 
     @destructive
     def test_edit_profile_change_display_name(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
-        credentials = mozwebqa.credentials['default']['name']
+        username = mozwebqa.credentials['default']['name']
         edit_page = home_page.click_edit_profile()
 
         edit_page.set_input_text_for('display_name', 'affiliates_name')
         edit_page.click_cancel()
-        Assert.equal(home_page.username, credentials)
+        Assert.equal(home_page.username, username)
 
         home_page.click_edit_profile()
         new_name = 'affiliates_test'
@@ -76,7 +75,7 @@ class TestHomePage:
         Assert.equal(home_page.username, new_name)
         #Back changes to normal
         home_page.click_edit_profile()
-        edit_page.set_input_text_for('display_name', credentials)
+        edit_page.set_input_text_for('display_name', username)
         edit_page.click_save_my_changes()
 
     @nondestructive
@@ -86,7 +85,7 @@ class TestHomePage:
 
         about_page = home_page.click_about_nav_button()
         Assert.equal(home_page.header, 'About Affiliates')
-        Assert.true(home_page.get_url_current_page().endswith('/about'))
+        Assert.true(about_page.is_the_current_url)
         Assert.not_none(about_page.about_text)
 
     @nondestructive
@@ -96,7 +95,7 @@ class TestHomePage:
 
         faq_page = home_page.click_faq_nav_button()
         Assert.equal(home_page.header, 'FAQs')
-        Assert.true(home_page.get_url_current_page().endswith('/faq'))
+        Assert.true(faq_page.is_the_current_url)
 
         Assert.true(faq_page.questions_count > 0)
         #Pick one question from each section
@@ -111,7 +110,7 @@ class TestHomePage:
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
 
-        Assert.true(home_page.get_url_current_page().endswith('/new'))
+        Assert.true(home_page.is_the_current_url)
         Assert.greater(home_page.category_count, 0, 'There is no categories in list')
         Assert.not_none(home_page.categories[0].name)
         Assert.true(home_page.is_step_button_selected('first'))

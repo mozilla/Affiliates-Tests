@@ -75,6 +75,13 @@ class Page(object):
             "Expected page title: %s. Actual page title: %s" % (self._page_title, self.selenium.title))
         return True
 
+    @property
+    def is_the_current_url(self):
+        url = self.base_url + self._page_url
+        Assert.equal(self.get_url_current_page(), url,
+            "Expected page url: %s. Actual page url: %s" % (url, self.get_url_current_page()))
+        return True
+
     def get_url_current_page(self):
         return(self.selenium.current_url)
 
