@@ -146,7 +146,6 @@ class Home(Page):
 
         _page_url = '/faq'
         _question_link_locator = (By.CSS_SELECTOR, '.faq_content h5')
-        _answer_locator = (By.CSS_SELECTOR, '.answer')
 
         @property
         def questions_count(self):

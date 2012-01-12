@@ -44,6 +44,7 @@ nondestructive = pytest.mark.nondestructive
 destructive = pytest.mark.destructive
 xfail = pytest.mark.xfail
 
+
 class TestHomePage:
 
     @nondestructive
@@ -121,7 +122,7 @@ class TestHomePage:
         #Select first Banner in list
         home_page.categories[0].select_category()
         Assert.true(home_page.is_step_button_selected('third'))
-        #Commenting out - ui changed 
+        #Commenting out - ui changed
         #Assert.equal(home_page.banner_url, home_page.banner_preview_url)
         #Assert.equal(home_page.banner_img_src, home_page.banner_preview_img_src)
 

@@ -39,7 +39,6 @@
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
 
 from page import Page
 
@@ -58,7 +57,7 @@ class StartPage(Page):
 
     #Not LoggedIn
     _login_browser_id_locator = (By.CSS_SELECTOR, '.browserid-button:nth-of-type(1) a')
-    _register_locator = (By.CSS_SELECTOR, '.browserid-button:nth-of-type(2) a')
+    _register_browser_id_locator = (By.CSS_SELECTOR, '.browserid-button:nth-of-type(2) a')
 
     def __init__(self, testsetup, open_url=True):
         ''' Creates a new instance of the class and gets the page ready for testing '''

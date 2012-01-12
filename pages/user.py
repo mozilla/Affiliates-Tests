@@ -58,14 +58,13 @@ class Login(Page):
 
 class Register(Page):
 
-    _register_browser_id_locator = (By.CSS_SELECTOR, '.browserid:nth-of-type(2)')
     _display_name_field_locator = (By.ID, 'id_display_name')
     _display_name_warning = 'Please enter a display name'
     _agreement_checkbox_locator = (By.ID, 'id_agreement')
     _subscribe_email_locator = (By.ID, 'id_email_subscribe')
     _register_button_locator = (By.CSS_SELECTOR, '#register-form .register')
 
-    _message_warning_locator = (By.CSS_SELECTOR, '#home-registration-forms .msg_warning:contains(%s)')
+    _message_warning_locator = (By.XPATH, "//div[@id='home-registration-forms']/p[contains(text(), '%s')]")
     _privacy_policy_warning = 'You must agree to the terms of service and privacy policy to register'
 
     def set_display_name(self, display_name):
