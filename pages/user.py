@@ -50,8 +50,8 @@ class Login(Page):
 
     def login_user_browser_id(self, user):
         credentials = self.testsetup.credentials[user]
-        import browserid
-        browserid = browserid.BrowserID(self.selenium, self.timeout)
+        from browserid import BrowserID
+        browserid = BrowserID(self.selenium, self.timeout)
         browserid.sign_in(credentials['email'], credentials['password'])
         WebDriverWait(self.selenium, 10).until(lambda s: s.find_element(*self._home_logout_locator))
 
