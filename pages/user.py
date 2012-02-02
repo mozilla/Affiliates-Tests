@@ -49,11 +49,11 @@ class Login(Page):
     _home_logout_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(1) a')
 
     def login_user_browser_id(self, user):
-        from pages.browser_id import BrowserID
-        pop_up = BrowserID(self.testsetup)
-        pop_up.login_browser_id(user)
-        pop_up.sign_in()
-        WebDriverWait(self.selenium, 10).until(lambda s: self.selenium.find_element(*self._home_logout_locator))
+        credentials = self.testsetup.credentials[user]
+        import browserid
+        browserid = browserid.BrowserID(self.selenium, self.timeout)
+        browserid.sign_in(credentials['email'], credentials['password'])
+        WebDriverWait(self.selenium, 10).until(lambda s: s.find_element(*self._home_logout_locator))
 
 
 class Register(Page):
