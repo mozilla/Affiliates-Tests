@@ -55,9 +55,9 @@ class Home(Page):
 
     #Content Navigation
     _page_header_locator = (By.CSS_SELECTOR, '#content h2')
-    _banners_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(1)')
-    _faq_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(2)')
-    _about_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(3)')
+    _banners_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(1) a')
+    _faq_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(2) a')
+    _about_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(3) a')
     _banner_categories_locator = (By.CSS_SELECTOR, '#step-content li')
     _banner_code_locator = (By.ID, 'badge_code')
     _banner_preview_locator = (By.CSS_SELECTOR, '#banner_preview')
