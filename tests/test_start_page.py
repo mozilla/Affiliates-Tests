@@ -47,6 +47,7 @@ nondestructive = pytest.mark.nondestructive
 class TestStartPage:
 
     @nondestructive
+    @pytest.mark.native
     def test_learn_more_tooltip_visibility(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         start_page.hover_over_learn_more_link()
