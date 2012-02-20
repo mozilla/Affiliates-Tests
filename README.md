@@ -3,6 +3,10 @@ Affiliates Tests
 
 Automated tests for the Affiliates web application.
 
+The following contributors have submitted pull requests to Affiliates-Tests:
+
+https://github.com/mozilla/Affiliates-Tests/contributors
+
 Running Tests
 -------------
 
