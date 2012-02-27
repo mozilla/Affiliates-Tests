@@ -29,7 +29,7 @@ class TestHomePage:
     @destructive
     def test_edit_profile_change_display_name(self, mozwebqa):
         start_page = StartPage(mozwebqa)
-        home_page = start_page.login()
+        home_page = start_page.login('technical_debt')
         username = mozwebqa.credentials['default']['name']
         edit_page = home_page.click_edit_profile()
 
