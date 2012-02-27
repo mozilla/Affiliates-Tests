@@ -32,9 +32,9 @@ class StartPage(Page):
         if open_url:
             self.selenium.get(self.base_url)
 
-    def login(self):
+    def login(self, user='default'):
         login = self.click_login_browser_id()
-        login.login_user_browser_id('default')
+        login.login_user_browser_id(user)
         from pages.home import Home
         return Home(self.testsetup)
 
