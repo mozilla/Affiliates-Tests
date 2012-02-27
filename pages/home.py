@@ -19,7 +19,7 @@ class Home(Page):
     #LoggedIn
     _logout_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(1) a')
     _edit_profile_locator = (By.CSS_SELECTOR, '#sidebar-nav li:nth-of-type(2) a')
-    _username_locator = (By.CSS_SELECTOR, '#user-info div')
+    _username_locator = (By.CSS_SELECTOR, '#user-info')
 
     #Content Navigation
     _page_header_locator = (By.CSS_SELECTOR, '#content h2')
