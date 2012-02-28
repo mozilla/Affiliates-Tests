@@ -29,8 +29,8 @@ class TestHomePage:
     @destructive
     def test_edit_profile_change_display_name(self, mozwebqa):
         start_page = StartPage(mozwebqa)
-        home_page = start_page.login()
-        username = mozwebqa.credentials['default']['name']
+        home_page = start_page.login('technical_debt')
+        username = mozwebqa.credentials['technical_debt']['name']
         edit_page = home_page.click_edit_profile()
 
         edit_page.set_input_text_for('display_name', 'affiliates_name')
