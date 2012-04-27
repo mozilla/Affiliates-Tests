@@ -28,7 +28,7 @@ class Home(Page):
     _about_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(3) a')
     _banner_categories_locator = (By.CSS_SELECTOR, '#step-content li')
     _banner_code_locator = (By.ID, 'badge_code')
-    _banner_preview_locator = (By.CSS_SELECTOR, '#banner_preview')
+    _banner_preview_locator = (By.ID, 'banner_preview')
     _step_buttons_locator = (By.CSS_SELECTOR, '.steps-buttons')
     _size_selector_locator = (By.ID, 'size')
     _color_selector_locator = (By.ID, 'color')
