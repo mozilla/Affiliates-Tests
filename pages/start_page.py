@@ -33,7 +33,8 @@ class StartPage(Page):
             self.selenium.get(self.base_url)
 
     def login(self, user='default'):
-        self.selenium.get(self.selenium.current_url)
+        # browser id is not logging in a normal mode and it requiters a refresh to login properly
+        self.selenium.refresh()
         login = self.click_login_browser_id()
         login.login_user_browser_id(user)
         from pages.home import Home
