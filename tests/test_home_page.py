@@ -42,7 +42,7 @@ class TestHomePage:
         edit_page.set_input_text_for('display_name', new_name)
         edit_page.click_save_my_changes()
         Assert.equal(home_page.username, new_name)
-        #Back changes to normal
+        # revert changes
         home_page.click_edit_profile()
         edit_page.set_input_text_for('display_name', username)
         edit_page.click_save_my_changes()
@@ -80,17 +80,17 @@ class TestHomePage:
         home_page = start_page.login()
 
         Assert.true(home_page.is_the_current_url)
-        Assert.greater(home_page.category_count, 0, 'There is no categories in list')
+        Assert.greater(home_page.category_count, 0, 'There are no categories in the list')
         Assert.not_none(home_page.categories[0].name)
         Assert.true(home_page.is_step_button_selected('first'))
-        #Select first Category in list
+        # select the first category in the list
         home_page.categories[0].select_category()
         Assert.true(home_page.is_step_button_selected('second'))
         Assert.not_none(home_page.categories[0].name)
-        #Select first Banner in list
+        # select the first banner in list
         home_page.categories[0].select_category()
         Assert.true(home_page.is_step_button_selected('third'))
-        #Commenting out - ui changed
+        # commenting out; UI changed
         #Assert.equal(home_page.banner_url, home_page.banner_preview_url)
         #Assert.equal(home_page.banner_img_src, home_page.banner_preview_img_src)
 
