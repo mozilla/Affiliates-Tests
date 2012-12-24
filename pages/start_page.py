@@ -23,8 +23,7 @@ class StartPage(Page):
     _facebook_button_locator = (By.CSS_SELECTOR, '.button.share_facebook')
 
     #Not LoggedIn
-    _login_browser_id_locator = (By.CSS_SELECTOR, '.browserid-button:nth-of-type(1) a')
-    _register_browser_id_locator = (By.CSS_SELECTOR, '.browserid-button:nth-of-type(2) a')
+    _login_browser_id_locator = (By.CSS_SELECTOR, 'a.persona-button')
 
     def __init__(self, testsetup, open_url=True):
         ''' Creates a new instance of the class and gets the page ready for testing '''
