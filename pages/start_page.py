@@ -19,8 +19,8 @@ class StartPage(Page):
     _learn_more_tooltip_locator = (By.ID, 'tooltip_home')
     _mozilla_logo_link_locator = (By.CSS_SELECTOR, '#header a')
     _footer_locator = (By.CSS_SELECTOR, '#footer')
-    _twitter_button_locator = (By.CSS_SELECTOR, '.button.share_twitter')
-    _facebook_button_locator = (By.CSS_SELECTOR, '.button.share_facebook')
+    _twitter_button_locator = (By.CSS_SELECTOR, '.button.share.twitter')
+    _facebook_button_locator = (By.CSS_SELECTOR, '.button.share.facebook')
 
     #Not LoggedIn
     _login_browser_id_locator = (By.CSS_SELECTOR, '.browserid-button:nth-of-type(1) a')
