@@ -104,7 +104,7 @@ class Home(Page):
     def banner_preview_img_src(self):
         _img = (By.TAG_NAME, 'img')
         return self.selenium.find_element(*self._banner_preview_locator).\
-                                            find_element(*_img).get_attribute('src').replace(self.base_url, '')
+            find_element(*_img).get_attribute('src').replace(self.base_url, '')
 
     def is_step_button_selected(self, button_no):
         return self.is_element_present(By.CSS_SELECTOR,
