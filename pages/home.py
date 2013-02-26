@@ -7,6 +7,7 @@
 import re
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 
 from page import Page
 
@@ -147,6 +148,7 @@ class Home(Page):
     class Categories(Page):
 
         _name_locator = (By.CSS_SELECTOR, 'p')
+        _selected_step_locator = (By.CSS_SELECTOR, '#steps-started li.%s.selected')
 
         def __init__(self, testsetup, element):
             Page.__init__(self, testsetup)
@@ -156,5 +158,8 @@ class Home(Page):
         def name(self):
             return self._root_element.find_element(*self._name_locator).text
 
-        def select_category(self):
+        def select_category(self, next_step=''):
             self._root_element.find_element(*self._name_locator).click()
+            if next_step is not '':
+                WebDriverWait(self.selenium, self.timeout).until(lambda s: self.is_element_visible(self._selected_step_locator[0],
+                                                                                                   self._selected_step_locator[1] % next_step))
