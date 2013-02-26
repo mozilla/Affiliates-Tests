@@ -84,15 +84,12 @@ class TestHomePage:
         Assert.not_none(home_page.categories[0].name)
         Assert.true(home_page.is_step_button_selected('first'))
         # select the first category in the list
-        home_page.categories[0].select_category()
+        home_page.categories[0].select_category('second')
         Assert.true(home_page.is_step_button_selected('second'))
         Assert.not_none(home_page.categories[0].name)
         # select the first banner in list
-        home_page.categories[0].select_category()
+        home_page.categories[0].select_category('third')
         Assert.true(home_page.is_step_button_selected('third'))
-        # commenting out; UI changed
-        #Assert.equal(home_page.banner_url, home_page.banner_preview_url)
-        #Assert.equal(home_page.banner_img_src, home_page.banner_preview_img_src)
 
     @xfail(reason="Changed UI")
     @nondestructive
