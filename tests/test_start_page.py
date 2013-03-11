@@ -36,3 +36,10 @@ class TestStartPage:
         Assert.true(start_page.is_mozilla_logo_visible)
         Assert.true(start_page.is_twitter_button_present)
         Assert.true(start_page.is_facebook_button_present)
+
+    @nondestructive
+    def test_that_text_bubble_appears_on_hovering_learn_more_link(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        start_page.hover_over_learn_more_link()
+        Assert.true(start_page.is_learn_more_tooltip_visible)
+        Assert.greater(len(start_page.learn_more_tooltip_text), 0)
