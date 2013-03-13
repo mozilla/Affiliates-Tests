@@ -70,3 +70,7 @@ class StartPage(Page):
     @property
     def is_learn_more_tooltip_visible(self):
         return self.is_element_visible(*self._learn_more_tooltip_locator)
+
+    @property
+    def learn_more_tooltip_text(self):
+        return self.selenium.find_element(*self._learn_more_tooltip_locator).text
