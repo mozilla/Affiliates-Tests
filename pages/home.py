@@ -28,7 +28,7 @@ class Home(Page):
     _faq_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(2) a')
     _about_content_nav_locator = (By.CSS_SELECTOR, '#content-nav li:nth-of-type(3) a')
     _banner_categories_locator = (By.CSS_SELECTOR, '#step-content li')
-    _banner_code_locator = (By.ID, 'badge_code')
+    _banner_size_locator = (By.CSS_SELECTOR, '#uniform-size.selector span')
     _banner_preview_locator = (By.ID, 'banner_preview')
     _step_buttons_locator = (By.CSS_SELECTOR, '.steps-buttons')
     _size_selector_locator = (By.ID, 'size')
@@ -82,8 +82,8 @@ class Home(Page):
         self.selenium.find_element(*option_locator).click()
 
     @property
-    def banner_html_code(self):
-        return self.selenium.find_element(*self._banner_code_locator).get_attribute('value')
+    def banner_size_text(self):
+        return self.selenium.find_element(*self._banner_size_locator).text
 
     @property
     def banner_url(self):

@@ -91,14 +91,13 @@ class TestHomePage:
         home_page.categories[0].select_category('third')
         Assert.true(home_page.is_step_button_selected('third'))
 
-    @xfail(reason="Changed UI")
     @nondestructive
     def test_change_banner_size_correct(self, mozwebqa):
-        size = '180x150'
+        size = '300x250'
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
 
         home_page.categories[0].select_category()
         home_page.categories[0].select_category()
         home_page.select_size(size)
-        Assert.contains(size, home_page.banner_html_code)
+        Assert.contains(size, home_page.banner_size_text)
