@@ -16,6 +16,7 @@ xfail = pytest.mark.xfail
 class TestHomePage:
 
     @nondestructive
+    @pytest.mark.xfail("config.getvalue('base_url') == 'https://affiliates-dev.allizom.org'", reason="[dev] Error when trying to edit profile")
     def test_edit_profile_has_proper_display_name(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
