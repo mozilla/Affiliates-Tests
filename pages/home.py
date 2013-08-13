@@ -31,7 +31,7 @@ class Home(Page):
     _banner_size_locator = (By.CSS_SELECTOR, '#uniform-size.selector span')
     _banner_preview_locator = (By.ID, 'banner_preview')
     _step_buttons_locator = (By.CSS_SELECTOR, '.steps-buttons')
-    _size_selector_locator = (By.ID, 'size')
+    _size_selector_locator = (By.ID, 'uniform-size')
     _color_selector_locator = (By.ID, 'color')
     _language_selector_locator = (By.ID, 'language')
 
