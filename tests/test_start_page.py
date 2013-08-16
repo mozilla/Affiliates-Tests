@@ -37,6 +37,7 @@ class TestStartPage:
         Assert.true(start_page.is_twitter_button_present)
         Assert.true(start_page.is_facebook_button_present)
 
+    @pytest.mark.xfail(reason='Selenium visibility/scroll issue, see http://code.google.com/p/selenium/issues/detail?id=6105')
     @nondestructive
     def test_that_text_bubble_appears_on_hovering_learn_more_link(self, mozwebqa):
         start_page = StartPage(mozwebqa)
