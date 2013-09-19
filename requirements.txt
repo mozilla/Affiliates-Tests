@@ -6,3 +6,4 @@ pytest==2.2.4
 pytest-mozwebqa==1.1.1
 pytest-xdist==1.8
 selenium
+-e git+https://github.com/mozilla/bidpom.git@master#egg=browserid
