@@ -6,6 +6,7 @@
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
 
 from page import Page
 
@@ -66,6 +67,8 @@ class StartPage(Page):
     def hover_over_learn_more_link(self):
         learn_more = self.selenium.find_element(*self._learn_more_link_locator)
         ActionChains(self.selenium).move_to_element(learn_more).perform()
+        WebDriverWait(self.selenium, self.timeout).until(
+                lambda s: s.find_element(*self._learn_more_tooltip_locator).get_attribute('style') == "display: block;")
 
     @property
     def is_learn_more_tooltip_visible(self):

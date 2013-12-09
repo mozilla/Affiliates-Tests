@@ -17,8 +17,6 @@ class TestHomePage:
 
     @nondestructive
     def test_edit_profile_has_proper_display_name(self, mozwebqa):
-        if mozwebqa.base_url == 'https://affiliates-dev.allizom.org':
-            pytest.xfail(reason='Bug 897575 - [dev][traceback] Unable to register new accounts')
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
         username = mozwebqa.credentials['default']['name']
