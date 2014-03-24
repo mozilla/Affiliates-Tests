@@ -9,6 +9,7 @@ from unittestzero import Assert
 
 import pytest
 
+credentials = pytest.mark.credentials
 nondestructive = pytest.mark.nondestructive
 
 
@@ -20,6 +21,7 @@ class TestStartPage:
         Assert.true(start_page.is_the_current_page)
         Assert.equal(start_page.header, 'Become a Firefox Affiliate Today!')
 
+    @credentials
     @nondestructive
     def test_login_logout_works_properly(self, mozwebqa):
         start_page = StartPage(mozwebqa)

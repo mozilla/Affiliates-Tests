@@ -7,6 +7,11 @@ The following contributors have submitted pull requests to Affiliates-Tests:
 
 https://github.com/mozilla/Affiliates-Tests/contributors
 
+Continuous Integration
+----------------------
+
+[![Build Status](https://secure.travis-ci.org/mozilla/Affiliates-Tests.png?branch=master)](http://travis-ci.org/mozilla/Affiliates-Tests/)
+
 Running Tests
 -------------
 

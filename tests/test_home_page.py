@@ -8,6 +8,7 @@ from unittestzero import Assert
 
 import pytest
 
+credentials = pytest.mark.credentials
 nondestructive = pytest.mark.nondestructive
 destructive = pytest.mark.destructive
 xfail = pytest.mark.xfail
@@ -15,6 +16,7 @@ xfail = pytest.mark.xfail
 
 class TestHomePage:
 
+    @credentials
     @nondestructive
     def test_edit_profile_has_proper_display_name(self, mozwebqa):
         start_page = StartPage(mozwebqa)
@@ -26,6 +28,7 @@ class TestHomePage:
         Assert.equal(edit_page.get_label_text_for('display_name'), 'DISPLAY NAME')
         Assert.equal(edit_page.get_input_text_for('display_name'), username)
 
+    @credentials
     @destructive
     def test_edit_profile_change_display_name(self, mozwebqa):
         start_page = StartPage(mozwebqa)
@@ -47,6 +50,7 @@ class TestHomePage:
         edit_page.set_input_text_for('display_name', username)
         edit_page.click_save_my_changes()
 
+    @credentials
     @nondestructive
     def test_about_page(self, mozwebqa):
         start_page = StartPage(mozwebqa)
@@ -57,6 +61,7 @@ class TestHomePage:
         Assert.true(about_page.is_the_current_url)
         Assert.not_none(about_page.about_text)
 
+    @credentials
     @nondestructive
     def test_faq_page(self, mozwebqa):
         start_page = StartPage(mozwebqa)
@@ -74,6 +79,7 @@ class TestHomePage:
             faq_page.expand_question_by_section(i)
             Assert.not_none(faq_page.answer(i))
 
+    @credentials
     @nondestructive
     def test_get_started_3_steps(self, mozwebqa):
         start_page = StartPage(mozwebqa)
@@ -91,6 +97,7 @@ class TestHomePage:
         home_page.categories[0].select_category('third')
         Assert.true(home_page.is_step_button_selected('third'))
 
+    @credentials
     @nondestructive
     def test_change_banner_size_correct(self, mozwebqa):
         size = '300x250'
