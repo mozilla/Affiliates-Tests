@@ -22,6 +22,7 @@ class EditProfile(Page):
 
         _modal_locator = (By.CSS_SELECTOR, '#profile > div#modal')
 
+        _display_name_locator = (By.ID, 'id_display_name')
         _save_locator = (By.CSS_SELECTOR, '.button.go')
         _cancel_locator = (By.CSS_SELECTOR, '.button.close')
 
