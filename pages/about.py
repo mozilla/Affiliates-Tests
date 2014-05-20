@@ -12,13 +12,20 @@ from pages.base import Base
 
 class About(Base):
 
+    _page_title = 'About | Firefox Affiliates'
     _page_url = '/about'
     _about_text_locator = (By.CSS_SELECTOR, '.section.page-head p.prose')
 
+    _category_locator = (By.CSS_SELECTOR, 'article#faq div.contain h3')
     _question_locator = (By.CSS_SELECTOR, '#faq .faq > dt')
-    _answer_locator = (By.CSS_SELECTOR, '#faq .faq > dd')
+    _answer_locator = (By.CSS_SELECTOR, 'dd p:nth-of-type(1)')
 
+    _page_header_locator = (By.CSS_SELECTOR, 'h1.page-title')
     _faq_header_locator = (By.CSS_SELECTOR, '#faq .section-title')
+
+    @property
+    def header(self):
+        return self.selenium.find_element(*self._page_header_locator).text
 
     @property
     def about_text(self):
@@ -29,11 +36,21 @@ class About(Base):
         return self.selenium.find_element(*self._faq_header_locator).text
 
     @property
+    def category_count(self):
+        return len(self.selenium.find_elements(*self._category_locator))
+
+    @property
     def questions_count(self):
         return len(self.selenium.find_elements(*self._question_locator))
 
     def questions_text(self, lookup):
-        return self.selenium.find_elements(*self._question_locator)[lookup].text
+        return self.selenium.find_elements(*self.
+            _question_locator)[lookup].text
+
+    @property
+    def answers_count(self):
+        return len(self.selenium.find_elements(*self._answer_locator))
 
     def answer(self, lookup):
-        return self.selenium.find_elements(*self._answer_locator)[lookup].text
+        return self.selenium.find_elements(*self.
+            _answer_locator)[lookup].text

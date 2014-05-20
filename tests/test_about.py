@@ -18,25 +18,53 @@ class TestAboutPage:
 
     @credentials
     @nondestructive
-    def test_about(self, mozwebqa):
+    def test_about_page_has_proper_titles(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
+        username = mozwebqa.credentials['default']['name']
 
-        about_page = home_page.click_about_nav_button()
-        Assert.equal(home_page.header, 'About Firefox Affiliates')
+        about_page = home_page.click_about_nav_link()
         Assert.true(about_page.is_the_current_url)
+        Assert.equal(about_page.faq_header, 'Frequently Asked Questions')
+
+    @credentials
+    @nondestructive
+    def test_about_text_present(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+        username = mozwebqa.credentials['default']['name']
+
+        about_page = home_page.click_about_nav_link()
         Assert.not_none(about_page.about_text)
 
     @credentials
     @nondestructive
-    def test_faq(self, mozwebqa):
+    def test_about_page_faq_category_present(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
+        username = mozwebqa.credentials['default']['name']
 
-        faq_page = home_page.click_about_nav_button()
+        about_page = home_page.click_about_nav_link()
+        Assert.true(about_page.category_count > 0)
 
-        Assert.true(faq_page.questions_count > 0)
-        #Pick one question from each section
-        for i in range(4):
-            Assert.not_none(faq_page.questions_text(i))
-            Assert.not_none(faq_page.answer(i))
+    @credentials
+    @nondestructive
+    def test_about_page_faq_questions_present(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+        username = mozwebqa.credentials['default']['name']
+
+        about_page = home_page.click_about_nav_link()
+        Assert.true(about_page.questions_count > 0)
+
+    @credentials
+    @nondestructive
+    def test_about_page_faq_answers_present(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+        username = mozwebqa.credentials['default']['name']
+
+        about_page = home_page.click_about_nav_link()
+        Assert.equal(about_page.questions_count, about_page.answers_count, 
+            'Questions count did not match answers count')
+        
