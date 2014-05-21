@@ -22,7 +22,8 @@ class EditProfile(Page):
 
         _modal_locator = (By.CSS_SELECTOR, '#profile > div#modal')
 
-        _display_name_locator = (By.ID, 'id_display_name')
+        _display_name_label_locator = (By.CSS_SELECTOR, '#modal label[for="id_display_name"]')
+        _display_name_locator = (By.CSS_SELECTOR, '#modal input#id_display_name')
         _save_locator = (By.CSS_SELECTOR, '.button.go')
         _cancel_locator = (By.CSS_SELECTOR, '.button.close')
 
@@ -32,17 +33,18 @@ class EditProfile(Page):
                 lambda s: self.is_element_visible(*self._modal_locator))
             self._root_element = self.selenium.find_element(*self._modal_locator)
 
-        def get_input_text_for(self, for_field):
-            return self._root_element.find_element(*getattr(self, '_%s_locator' % for_field)).get_attribute('value')
+        @property
+        def display_name_label(self):
+            return self._root_element.find_element(*self._display_name_label_locator).text
 
-        def set_input_text_for(self, for_field, value):
-            input_field = self._root_element.find_element(*getattr(self, '_%s_locator' % for_field))
+        @property
+        def display_name(self):
+            return self._root_element.find_element(*self._display_name_locator).get_attribute('value')
+
+        def set_display_name(self, name):
+            input_field = self._root_element.find_element(*self._display_name_locator)
             input_field.clear()
-            input_field.send_keys(value)
-
-        def get_label_text_for(self, for_label):
-            locator = getattr(self, "_%s_locator" % for_label)
-            return self._root_element.find_element(By.CSS_SELECTOR, 'label[for=\'%s\']' % locator[1]).text
+            input_field.send_keys(name)
 
         def click_save_my_changes(self):
             self._root_element.find_element(*self._save_locator).click()

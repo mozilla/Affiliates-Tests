@@ -27,8 +27,8 @@ class TestProfilePage:
         edit_page = home_page.click_profile()
         Assert.equal(home_page.header, username)
         edit_page_modal = edit_page.click_edit_profile()
-        Assert.equal(edit_page_modal.get_label_text_for('display_name'), 'DISPLAY NAME')
-        Assert.equal(edit_page_modal.get_input_text_for('display_name'), username)
+        Assert.equal(edit_page_modal.display_name_label, 'DISPLAY NAME')
+        Assert.equal(edit_page_modal.display_name, username)
 
     @credentials
     @destructive
@@ -39,17 +39,17 @@ class TestProfilePage:
         edit_page = home_page.click_profile()
         edit_page_modal = edit_page.click_edit_profile()
 
-        edit_page_modal.set_input_text_for('display_name', 'affiliates_name')
+        edit_page_modal.set_display_name('affiliates_name')
         edit_page_modal.click_cancel()
         Assert.equal(home_page.username, username.upper())
 
         edit_page_modal = edit_page.click_edit_profile()
         new_name = 'affiliates_test'
-        edit_page_modal.set_input_text_for('display_name', new_name)
+        edit_page_modal.set_display_name(new_name)
         edit_page_modal.click_save_my_changes()
         Assert.equal(home_page.username, new_name.upper())
 
         # revert changes
         edit_page_modal = edit_page.click_edit_profile()
-        edit_page_modal.set_input_text_for('display_name', username)
+        edit_page_modal.set_display_name(username)
         edit_page_modal.click_save_my_changes()
