@@ -4,7 +4,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-
 from selenium.webdriver.common.by import By
 
 from pages.base import Base
@@ -16,7 +15,7 @@ class Home(Base):
     _page_url = '/dashboard'
 
     _page_header_locator = (By.CSS_SELECTOR, '.page-head .page-title')
-    _about_content_nav_locator = (By.CSS_SELECTOR, 
+    _about_content_nav_locator = (By.CSS_SELECTOR,
         'ul#nav-main-menu li:nth-of-type(1) a')
 
     @property
