@@ -17,7 +17,7 @@ class EditProfile(Page):
 
     @property
     def view_website(self):
-        return self.selenium.find_element(*self._view_website_locator).text
+        return str(self.selenium.find_element(*self._view_website_locator).text)
 
     def click_edit_profile(self):
         self.selenium.find_element(*self._edit_profile_locator).click()
@@ -59,7 +59,7 @@ class EditProfile(Page):
 
         @property
         def website(self):
-            return self._root_element.find_element(*self._edit_website_locator).get_attribute('value')
+            return str(self._root_element.find_element(*self._edit_website_locator).get_attribute('value'))
 
         def set_website(self, url):
             input_field = self._root_element.find_element(*self._edit_website_locator)
