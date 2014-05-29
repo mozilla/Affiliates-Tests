@@ -59,16 +59,19 @@ class TestProfilePage:
     def test_edit_profile_set_website(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
-        username = mozwebqa.credentials['default']['name']
         edit_page = home_page.click_profile()
         edit_page_modal = edit_page.click_edit_profile()
 
-        website_url = 'http://wiki.mozilla.com'
-        edit_page_modal.set_website(website_url)
+        edit_page_modal.set_website('http://wiki.mozilla.com/')
         edit_page_modal.click_save_my_changes()
-        Assert.contains(website_url, edit_page.view_website, 'Read-only website did not match the saved website.')
+        Assert.equal(edit_page.view_website, 'http://wiki.mozilla.com/', 
+            "Failed because expected 'http://wiki.mozilla.com' but returned "
+             + edit_page.view_website)
 
-        # revert changes
+        # verify user can leave website field empty
         edit_page_modal = edit_page.click_edit_profile()
         edit_page_modal.set_website('')
         edit_page_modal.click_save_my_changes()
+        edit_page_modal = edit_page.click_edit_profile()
+        Assert.equal(edit_page_modal.website, '', 
+            'Clearing the website field failed.')
