@@ -53,3 +53,22 @@ class TestProfilePage:
         edit_page_modal = edit_page.click_edit_profile()
         edit_page_modal.set_display_name(username)
         edit_page_modal.click_save_my_changes()
+
+    @credentials
+    @destructive
+    def test_edit_profile_set_website(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.login()
+        username = mozwebqa.credentials['default']['name']
+        edit_page = home_page.click_profile()
+        edit_page_modal = edit_page.click_edit_profile()
+
+        website_url = 'http://wiki.mozilla.com'
+        edit_page_modal.set_website(website_url)
+        edit_page_modal.click_save_my_changes()
+        Assert.contains(website_url, edit_page.view_website, 'Read-only website did not match the saved website.')
+
+        # revert changes
+        edit_page_modal = edit_page.click_edit_profile()
+        edit_page_modal.set_website('')
+        edit_page_modal.click_save_my_changes()
