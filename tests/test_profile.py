@@ -82,9 +82,8 @@ class TestProfilePage:
     def test_verify_layout_logged_in_user(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
-        username = mozwebqa.credentials['default']['name']
-
         edit_page = home_page.click_profile()
+
         Assert.true(edit_page.is_stats_section_visible())
         Assert.true(edit_page.is_stats_ranking_visible())
         Assert.not_none(edit_page.stats_ranking, 'Stats rankings is null')
