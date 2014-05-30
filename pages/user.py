@@ -13,15 +13,59 @@ from page import Page
 class EditProfile(Page):
 
     _edit_profile_locator = (By.ID, 'edit-profile-link')
+    _page_title_locator = (By.CSS_SELECTOR, 'h1.page-title')
     _view_website_locator = (By.CSS_SELECTOR, 'p.website a')
+    _stats_section_locator = (By.ID, 'stats')
+    _stats_ranking_locator = (By.CSS_SELECTOR, 'section#stats div ul.stats li.ranking')
+    _stats_banner_locator = (By.CSS_SELECTOR, 'section#stats div ul.stats li.banners')
+    _stats_clicks_locator = (By.CSS_SELECTOR, 'section#stats div ul.stats li.clicks')
+    _milestones_section_locator = (By.ID, 'milestones')
+    _newsletter_form_locator = (By.ID, 'newsletter-form')
+
+    @property
+    def page_title(self):
+        return self.selenium.find_element(*self._page_title_locator).text
 
     @property
     def view_website(self):
         return str(self.selenium.find_element(*self._view_website_locator).text)
 
+    def is_website_visible(self):
+        return self.is_element_visible(*self._view_website_locator)
+
     def click_edit_profile(self):
         self.selenium.find_element(*self._edit_profile_locator).click()
         return self.EditProfileModal(self.testsetup)
+
+    def is_stats_section_visible(self):
+        return self.is_element_visible(*self._stats_section_locator)
+
+    @property
+    def stats_ranking(self):
+        return self.selenium.find_element(*self._stats_ranking_locator).text
+
+    def is_stats_ranking_visible(self):
+        return self.is_element_visible(*self._stats_ranking_locator)
+
+    @property
+    def stats_banners(self):
+        return self.selenium.find_element(*self._stats_banner_locator).text
+
+    def is_stats_banners_visible(self):
+        return self.is_element_visible(*self._stats_banner_locator)
+
+    @property
+    def stats_clicks(self):
+        return self.selenium.find_element(*self._stats_clicks_locator).text
+
+    def is_stats_clicks_visible(self):
+        return self.is_element_visible(*self._stats_clicks_locator)
+
+    def is_milestones_section_visible(self):
+        return self.is_element_visible(*self._milestones_section_locator)
+
+    def is_newsletter_form_visible(self):
+        return self.is_element_visible(*self._newsletter_form_locator)
 
     class EditProfileModal(Page):
 
