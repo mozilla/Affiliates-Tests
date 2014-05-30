@@ -13,7 +13,6 @@ from page import Page
 class EditProfile(Page):
 
     _edit_profile_locator = (By.ID, 'edit-profile-link')
-    _page_title_locator = (By.CSS_SELECTOR, 'h1.page-title')
     _view_website_locator = (By.CSS_SELECTOR, 'p.website a')
     _stats_section_locator = (By.ID, 'stats')
     _stats_ranking_locator = (By.CSS_SELECTOR, 'section#stats div ul.stats li.ranking')
@@ -21,10 +20,6 @@ class EditProfile(Page):
     _stats_clicks_locator = (By.CSS_SELECTOR, 'section#stats div ul.stats li.clicks')
     _milestones_section_locator = (By.ID, 'milestones')
     _newsletter_form_locator = (By.ID, 'newsletter-form')
-
-    @property
-    def page_title(self):
-        return self.selenium.find_element(*self._page_title_locator).text
 
     @property
     def view_website(self):
