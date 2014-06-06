@@ -7,7 +7,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
-from page import Page
+from pages.page import Page
 
 
 class EditProfile(Page):
