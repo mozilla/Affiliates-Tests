@@ -13,6 +13,8 @@ from page import Page
 
 class Base(Page):
 
+    _page_title_locator = (By.CSS_SELECTOR, 'h1.page-title')
+
     #LoggedIn
     _logout_locator = (By.CSS_SELECTOR, '#nav-user-submenu li a.browserid-logout')
     _profile_locator = (By.CSS_SELECTOR, '#nav-user-submenu li:nth-of-type(2) a')
@@ -20,6 +22,10 @@ class Base(Page):
 
     #Content Navigation
     _about_content_nav_locator = (By.CSS_SELECTOR, '#nav-main-menu li:nth-of-type(1) a')
+
+    @property
+    def page_title(self):
+        return self.selenium.find_element(*self._page_title_locator).text
 
     def _hover_user_menu(self):
         username = self.selenium.find_element(*self._username_locator)
