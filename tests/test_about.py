@@ -60,4 +60,4 @@ class TestAboutPage:
 
         about_page = home_page.click_about_nav_link()
         Assert.equal(about_page.questions_count, about_page.answers_count,
-            'Questions count did not match answers count')
+                     'Questions count did not match answers count')
