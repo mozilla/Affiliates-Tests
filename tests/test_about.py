@@ -17,7 +17,7 @@ class TestAboutPage:
 
     @credentials
     @nondestructive
-    def test_about_page_page_has_proper_layout(self, mozwebqa):
+    def test_about_page_has_proper_layout(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
 
