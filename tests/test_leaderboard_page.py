@@ -25,6 +25,3 @@ class TestLeaderboardPage:
         leaderboard_page = LeaderboardPage(mozwebqa)
         leaderboard_page.go_to_page()
         Assert.contains('Top Affiliates', leaderboard_page.leaderboard_header_text)
-
-        
-    
