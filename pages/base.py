@@ -22,7 +22,8 @@ class Base(Page):
 
     #Content Navigation
     _about_content_nav_locator = (By.CSS_SELECTOR, '#nav-main-menu li:nth-of-type(1) a')
-
+    _leaderboard_link_locator = (By.CSS_SELECTOR, '#nav-main-menu > li:nth-of-type(2) a')
+    
     @property
     def page_title(self):
         return self.selenium.find_element(*self._page_title_locator).text
@@ -61,3 +62,8 @@ class Base(Page):
         browserid = BrowserID(self.selenium, self.timeout)
         browserid.sign_in(credentials['email'], credentials['password'])
         WebDriverWait(self.selenium, self.timeout).until(lambda s: s.find_element(*self._logout_locator))
+
+    def click_leaderboard_link(self):
+        self.selenium.find_element(*self._leaderboard_link_locator).click()
+        from pages.leaderboard import LeaderboardPage
+        return LeaderboardPage(self.testsetup)

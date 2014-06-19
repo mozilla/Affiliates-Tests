@@ -6,10 +6,10 @@
 
 from selenium.webdriver.common.by import By
 
-from pages.page import Page
+from pages.base import Base
 
 
-class StartPage(Page):
+class StartPage(Base):
 
     _page_title = 'Firefox Affiliates'
 
@@ -20,7 +20,7 @@ class StartPage(Page):
 
     def __init__(self, testsetup, open_url=True):
         """ Creates a new instance of the class and gets the page ready for testing """
-        Page.__init__(self, testsetup)
+        Base.__init__(self, testsetup)
         if open_url:
             self.selenium.get(self.base_url)
 
@@ -35,6 +35,7 @@ class StartPage(Page):
         self.selenium.find_element(*self._login_browser_id_locator).click()
         from pages.base import Base
         return Base(self.testsetup)
+
 
     @property
     def header(self):
