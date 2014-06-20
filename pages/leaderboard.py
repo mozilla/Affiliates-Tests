@@ -11,7 +11,12 @@ from selenium.webdriver.common.by import By
 class LeaderboardPage(Base):
 
     _title = (By.CSS_SELECTOR, '.page-title')
+    _table = (By.CSS_SELECTOR, 'table.leaderboard tbody tr')
 
     @property
     def title(self):
         return self.selenium.find_element(*self._title).text
+
+    @property
+    def leaderboard_count(self):
+        return len(self.selenium.find_elements(*self._table))
