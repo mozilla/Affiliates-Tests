@@ -11,11 +11,6 @@ from selenium.webdriver.common.by import By
 class LeaderboardPage(Base):
 
     _title = (By.CSS_SELECTOR, '.page-title')
-    
-    _leaderboard_page_url = '/leaderboard/'
-
-    def go_to_page(self):
-        self.open(self._leaderboard_page_url)
 
     @property
     def title(self):
