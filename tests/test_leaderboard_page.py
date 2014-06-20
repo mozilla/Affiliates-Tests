@@ -18,7 +18,7 @@ class TestLeaderboardPage():
 
     @credentials
     @nondestructive
-    def test_leaderboard_is_reachable(self, mozwebqa):
+    def test_logged_in_user_can_reach_leaderboard(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
         leaderboard_page = home_page.click_leaderboard_link()
