@@ -8,20 +8,18 @@
 import pytest
 
 from pages.start_page import StartPage
-from pages.leaderboard import LeaderboardPage
 from unittestzero import Assert
 
 credentials = pytest.mark.credentials
 nondestructive = pytest.mark.nondestructive
 
 
-class TestLeaderboardPage:
+class TestLeaderboardPage():
 
     @credentials
     @nondestructive
-    def test_leaderboard_is_present(self, mozwebqa):
+    def test_leaderboard_is_reachable(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
-        leaderboard_page = LeaderboardPage(mozwebqa)
-        leaderboard_page.go_to_page()
-        Assert.contains('Top Affiliates', leaderboard_page.leaderboard_header_text)
+        leaderboard_page = home_page.click_leaderboard_link()
+        Assert.contains('Top Affiliates', leaderboard_page.title)
