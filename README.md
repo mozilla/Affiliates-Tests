@@ -28,10 +28,10 @@ If you need to brush-up on programming, but are eager to start contributing imme
 Questions are always welcome
 ----------------------------
 
-While we take pains to keep our documentation updated, the best source of information is those of us who work on the project. Don't be afraid to join us in irc.mozilla.org [#mozwebqa][mozwebqa] to ask questions about our Selenium tests. Mozilla also hosts the [#mozillians][mozillians] chat room to answer your general questions about contributing to Mozilla.
+While we take pains to keep our documentation updated, the best source of information is those of us who work on the project. Don't be afraid to join us in irc.mozilla.org [#mozwebqa][mozwebqa] to ask questions about our Selenium tests. Mozilla also hosts the [#affiliates][affiliates] chat room to answer your general questions about contributing to Mozilla.
 
 [mozwebqa]: http://client01.chat.mibbit.com/?server=irc.mozilla.org&channel=#mozwebqa
-[mozillians]: http://client01.chat.mibbit.com/?server=irc.mozilla.org&channel=#mozillians
+[affiliates]: http://client01.chat.mibbit.com/?server=irc.mozilla.org&channel=#affiliates
 
 Getting set up
 --------------
@@ -120,11 +120,11 @@ If you want to get involved and add more tests, then there's just a few things w
 License
 -------
 
-This software is licensed under the [MPL][MLP] 2.0:
+This software is licensed under the [MPL][MPL] 2.0:
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file, You can obtain one at
     http://mozilla.org/MPL/2.0/.
 
-[MLP]: http://www.mozilla.org/MPL/2.0/
+[MPL]: http://www.mozilla.org/MPL/2.0/
 
