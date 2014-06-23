@@ -32,11 +32,15 @@ class StartPage(Base):
         from pages.home import Home
         return Home(self.testsetup)
 
-    def create_new_user(self, user):
+    def create_new_account(self):
+        """Retrieves a vouched email and password and logs in"""
+
+        credentials = self.get_new_user()
+
         self.click_login_browser_id()
         from browserid import BrowserID
         pop_up = BrowserID(self.selenium, self.timeout)
-        pop_up.sign_in(user['email'], user['password'])
+        pop_up.sign_in(credentials['email'], credentials['password'])
 
         WebDriverWait(self.selenium, self.timeout).until(lambda s: self.is_user_logged_in)
 
