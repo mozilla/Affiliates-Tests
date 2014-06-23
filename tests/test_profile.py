@@ -7,6 +7,7 @@
 import pytest
 
 from pages.start_page import StartPage
+from pages.persona_test import PersonaTest
 from unittestzero import Assert
 
 
@@ -65,7 +66,7 @@ class TestProfilePage:
         edit_page_modal.set_website('http://wiki.mozilla.com/')
         edit_page_modal.click_save_my_changes()
         Assert.true(edit_page.is_website_visible())
-        Assert.equal(edit_page.view_website, 'http://wiki.mozilla.com/', 
+        Assert.equal(edit_page.view_website, 'http://wiki.mozilla.com/',
             "Failed because expected 'http://wiki.mozilla.com' but returned "
              + edit_page.view_website)
 
@@ -74,7 +75,7 @@ class TestProfilePage:
         edit_page_modal.set_website('')
         edit_page_modal.click_save_my_changes()
         edit_page_modal = edit_page.click_edit_profile()
-        Assert.equal(edit_page_modal.website, '', 
+        Assert.equal(edit_page_modal.website, '',
             'Clearing the website field failed.')
 
     @credentials
@@ -93,3 +94,20 @@ class TestProfilePage:
         Assert.not_none(edit_page.stats_clicks, 'Stats clickss is null')
         Assert.true(edit_page.is_milestones_section_visible())
         Assert.true(edit_page.is_newsletter_form_visible())
+
+    @credentials
+    @destructive
+    def test_new_account_creation_workflow(self, mozwebqa):
+        persona_user = PersonaTest(mozwebqa)
+        user = persona_user.get_new_user()
+
+        start_page = StartPage(mozwebqa)
+        home_page = start_page.create_new_user(user)
+
+        Assert.true(home_page.is_user_logged_in)
+
+        logged_out = home_page.logout()
+        Assert.false(logged_out.is_user_logged_in)
+
+        logged_in = logged_out.login()
+        Assert.true(logged_in.is_user_logged_in)

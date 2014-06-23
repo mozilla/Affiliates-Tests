@@ -23,7 +23,7 @@ class Base(Page):
     #Content Navigation
     _about_content_nav_locator = (By.CSS_SELECTOR, '#nav-main-menu li:nth-of-type(1) a')
     _leaderboard_link_locator = (By.CSS_SELECTOR, '#nav-main-menu > li:nth-of-type(2) a')
-    
+
     @property
     def page_title(self):
         return self.selenium.find_element(*self._page_title_locator).text
@@ -40,10 +40,13 @@ class Base(Page):
     def username(self):
         return self.selenium.find_element(*self._username_locator).text
 
-    def click_logout(self):
+    def logout(self):
         self._hover_user_menu()
         self.selenium.find_element(*self._logout_locator).click()
         WebDriverWait(self.selenium, self.timeout).until(lambda s: not self.is_user_logged_in)
+
+        from pages.start_page import StartPage
+        return StartPage(self.testsetup)
 
     def click_profile(self):
         self._hover_user_menu()
