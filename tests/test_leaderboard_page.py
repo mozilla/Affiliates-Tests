@@ -23,3 +23,10 @@ class TestLeaderboardPage():
         home_page = start_page.login()
         leaderboard_page = home_page.click_leaderboard_link()
         Assert.contains('Top Affiliates', leaderboard_page.title)
+
+    @nondestructive
+    def test_leaderboard_layout_for_guest_users(self,mozwebqa):
+        start_page = StartPage(mozwebqa)
+        leaderboard_page = start_page.click_leaderboard_link()
+        Assert.contains('Top Affiliates', leaderboard_page.title)
+        Assert.equal(100, leaderboard_page.leaderboard_count)
