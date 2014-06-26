@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.base import Base
 
@@ -27,6 +28,21 @@ class StartPage(Base):
     def login(self, user='default'):
         base = self.click_login_browser_id()
         base.login_user_browser_id(user)
+
+        from pages.home import Home
+        return Home(self.testsetup)
+
+    def create_new_account(self):
+        """Retrieves a vouched email and password and logs in"""
+
+        credentials = self.get_new_user()
+
+        self.click_login_browser_id()
+        from browserid import BrowserID
+        pop_up = BrowserID(self.selenium, self.timeout)
+        pop_up.sign_in(credentials['email'], credentials['password'])
+
+        WebDriverWait(self.selenium, self.timeout).until(lambda s: self.is_user_logged_in)
 
         from pages.home import Home
         return Home(self.testsetup)
