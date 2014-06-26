@@ -28,6 +28,6 @@ class TestStartPage:
         home_page = start_page.login()
         Assert.true(home_page.is_user_logged_in, 'User not logged in')
         Assert.equal(home_page.header, 'Dashboard')
-        home_page.click_logout()
+        home_page.logout()
         Assert.false(home_page.is_user_logged_in, 'User logged in')
         Assert.equal(start_page.header, 'Become a Firefox Affiliate today!')
