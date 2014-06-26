@@ -96,7 +96,7 @@ class TestProfilePage:
 
     @credentials
     @destructive
-    def test_new_account_creation_workflow(self, mozwebqa):
+    def test_new_account_creation(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.create_new_account()
 
