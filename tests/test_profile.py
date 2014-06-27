@@ -6,6 +6,7 @@
 
 import pytest
 
+from datetime import datetime
 from pages.start_page import StartPage
 from unittestzero import Assert
 
@@ -33,18 +34,20 @@ class TestProfilePage:
     @credentials
     @destructive
     def test_edit_profile_change_display_name(self, mozwebqa):
+        cur_date_time = datetime.now()
         start_page = StartPage(mozwebqa)
-        home_page = start_page.login('technical_debt')
-        username = mozwebqa.credentials['technical_debt']['name']
+        home_page = start_page.login()
+        username = mozwebqa.credentials['default']['name']
         edit_page = home_page.click_profile()
         edit_page_modal = edit_page.click_edit_profile()
 
-        edit_page_modal.set_display_name('affiliates_name')
+        edit_page_modal.set_display_name(mozwebqa.
+            credentials['default']['name'] + str(cur_date_time))
         edit_page_modal.click_cancel()
         Assert.equal(home_page.username, username.upper())
 
         edit_page_modal = edit_page.click_edit_profile()
-        new_name = 'affiliates_test'
+        new_name = mozwebqa.credentials['default']['name'] + str(cur_date_time)
         edit_page_modal.set_display_name(new_name)
         edit_page_modal.click_save_my_changes()
         Assert.equal(home_page.username, new_name.upper())
