@@ -62,7 +62,3 @@ class Page(object):
             return self.selenium.find_element(*locator).is_displayed()
         except (NoSuchElementException, ElementNotVisibleException):
             return False
-
-    @property
-    def get_url_current_page(self):
-        return self.selenium.current_url
