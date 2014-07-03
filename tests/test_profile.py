@@ -19,19 +19,6 @@ destructive = pytest.mark.destructive
 class TestProfilePage:
 
     @credentials
-    @nondestructive
-    def test_edit_profile_has_proper_display_name(self, mozwebqa):
-        start_page = StartPage(mozwebqa)
-        home_page = start_page.login()
-        username = mozwebqa.credentials['default']['name']
-
-        edit_page = home_page.click_profile()
-        Assert.equal(home_page.header, username)
-        edit_page_modal = edit_page.click_edit_profile()
-        Assert.equal(edit_page_modal.display_name_label, 'DISPLAY NAME')
-        Assert.equal(edit_page_modal.display_name, username)
-
-    @credentials
     @destructive
     def test_edit_profile_change_display_name(self, mozwebqa):
         cur_date_time = datetime.now()
