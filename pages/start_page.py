@@ -23,7 +23,7 @@ class StartPage(Base):
         """ Creates a new instance of the class and gets the page ready for testing """
         Base.__init__(self, testsetup)
         if open_url:
-            self.selenium.get(self.base_url)
+            self.open('/')
 
     def login(self, user='default'):
         base = self.click_login_browser_id()
