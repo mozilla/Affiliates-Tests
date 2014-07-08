@@ -65,6 +65,7 @@ class Page(object):
 
     def open(self, url_fragment):
         self.selenium.get(self.base_url + url_fragment)
+        self.selenium.maximize_window()
 
     @property
     def get_url_current_page(self):
