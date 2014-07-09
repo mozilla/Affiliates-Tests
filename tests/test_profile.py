@@ -25,24 +25,25 @@ class TestProfilePage:
 
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
-        username = mozwebqa.credentials['default']['name']
+        current_username = home_page.username
+        new_username = mozwebqa.credentials['default']['name'] + str(cur_date_time)
+        print current_username
+        print new_username
         edit_page = home_page.click_profile()
         edit_page_modal = edit_page.click_edit_profile()
 
-        edit_page_modal.set_display_name(mozwebqa.
-            credentials['default']['name'] + str(cur_date_time))
+        edit_page_modal.set_display_name(new_username)
         edit_page_modal.click_cancel()
-        Assert.equal(home_page.username, username.upper())
+        Assert.equal(home_page.username, current_username)
 
         edit_page_modal = edit_page.click_edit_profile()
-        new_name = mozwebqa.credentials['default']['name'] + str(cur_date_time)
-        edit_page_modal.set_display_name(new_name)
+        edit_page_modal.set_display_name(new_username)
         edit_page_modal.click_save_my_changes()
-        Assert.equal(home_page.username, new_name.upper())
+        Assert.equal(home_page.username, new_username.upper())
 
         # revert changes
         edit_page_modal = edit_page.click_edit_profile()
-        edit_page_modal.set_display_name(username)
+        edit_page_modal.set_display_name(current_username)
         edit_page_modal.click_save_my_changes()
 
     @credentials
@@ -57,8 +58,8 @@ class TestProfilePage:
         edit_page_modal.click_save_my_changes()
         Assert.true(edit_page.is_website_visible())
         Assert.equal(edit_page.view_website, 'http://wiki.mozilla.com/',
-            "Failed because expected 'http://wiki.mozilla.com' but returned "
-             + edit_page.view_website)
+                     "Failed because expected 'http://wiki.mozilla.com' but returned "
+                     + edit_page.view_website)
 
         # verify user can leave website field empty
         edit_page_modal = edit_page.click_edit_profile()
@@ -66,7 +67,7 @@ class TestProfilePage:
         edit_page_modal.click_save_my_changes()
         edit_page_modal = edit_page.click_edit_profile()
         Assert.equal(edit_page_modal.website, '',
-            'Clearing the website field failed.')
+                     'Clearing the website field failed.')
 
     @credentials
     @nondestructive

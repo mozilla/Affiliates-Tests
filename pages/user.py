@@ -108,9 +108,9 @@ class EditProfile(Page):
         def click_save_my_changes(self):
             self._root_element.find_element(*self._save_locator).click()
             WebDriverWait(self.selenium, self.timeout).until(
-                lambda s: not self.is_element_visible(*self._modal_locator))
+                lambda s: self.is_element_not_visible(*self._modal_locator))
 
         def click_cancel(self):
             self._root_element.find_element(*self._cancel_locator).click()
             WebDriverWait(self.selenium, self.timeout).until(
-                lambda s: not self.is_element_visible(*self._modal_locator))
+                lambda s: self.is_element_not_visible(*self._modal_locator))
