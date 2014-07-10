@@ -8,9 +8,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.page import Page
+from pages.base import Base
 
 
-class EditProfile(Page):
+class EditProfile(Base):
 
     _edit_profile_locator = (By.ID, 'edit-profile-link')
     _view_website_locator = (By.CSS_SELECTOR, 'p.website a')
