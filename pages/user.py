@@ -6,6 +6,7 @@
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 
 from pages.page import Page
 from pages.base import Base
@@ -62,6 +63,13 @@ class EditProfile(Base):
 
     def is_newsletter_form_visible(self):
         return self.is_element_visible(*self._newsletter_form_locator)
+
+    def get_expected_user(self, user):
+        try:
+            WebDriverWait(self.selenium, self.timeout).until(lambda s: self.username != user)
+        except TimeoutException:
+            pass
+        return self.username
 
     class EditProfileModal(Page):
 

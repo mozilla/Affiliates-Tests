@@ -84,6 +84,3 @@ class Base(Page):
         self.selenium.find_element(*self._leaderboard_link_locator).click()
         from pages.leaderboard import LeaderboardPage
         return LeaderboardPage(self.testsetup)
-
-    def wait_until_expected_user(self, user):
-            WebDriverWait(self.selenium, self.timeout).until(lambda s: self.username == user)
