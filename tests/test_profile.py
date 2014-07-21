@@ -34,12 +34,12 @@ class TestProfilePage:
 
         edit_page_modal.set_display_name(new_username)
         edit_page_modal.click_cancel()
-        Assert.equal(home_page.username, current_username)
+        Assert.equal(edit_page.username, current_username)
 
         edit_page_modal = edit_page.click_edit_profile()
         edit_page_modal.set_display_name(new_username)
         edit_page_modal.click_save_my_changes()
-        Assert.equal(home_page.username, new_username.upper())
+        Assert.equal(edit_page.get_expected_user(new_username.upper()), new_username.upper())
 
         # revert changes
         edit_page_modal = edit_page.click_edit_profile()
