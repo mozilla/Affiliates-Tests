@@ -27,8 +27,7 @@ class TestProfilePage:
         home_page = start_page.login()
         current_username = home_page.username
         new_username = mozwebqa.credentials['default']['name'] + str(cur_date_time)
-        print current_username
-        print new_username
+
         edit_page = home_page.click_profile()
         edit_page_modal = edit_page.click_edit_profile()
 
