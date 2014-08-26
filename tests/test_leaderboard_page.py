@@ -25,8 +25,13 @@ class TestLeaderboardPage():
         Assert.contains('Top Affiliates', leaderboard_page.title)
 
     @nondestructive
-    def test_leaderboard_layout_for_guest_users(self,mozwebqa):
+    def test_leaderboard_layout_for_guest_users(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         leaderboard_page = start_page.click_leaderboard_link()
         Assert.contains('Top Affiliates', leaderboard_page.title)
-        Assert.equal(100, leaderboard_page.leaderboard_count)
+        Assert.greater('Leaderboard is empty',
+                       0, leaderboard_page.leaderboard_user_count)
+
+        for user_row in leaderboard_page.leaderboard_user_rows:
+            Assert.true('Row not visible. Row info: %s' % user_row,
+                        user_row.is_row_visible())
