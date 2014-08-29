@@ -48,6 +48,8 @@ class TestProfilePage:
 
     @credentials
     @destructive
+    @pytest.mark.xfail("'affiliates.allizom' in config.getvalue('base_url')",
+                       reason="Bug 1053713 - [stage] Updating profile website the second time does not show up on profile page")
     def test_edit_profile_set_website(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
