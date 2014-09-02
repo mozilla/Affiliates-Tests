@@ -17,6 +17,8 @@ class TestBanners:
 
     @credentials
     @destructive
+    @pytest.mark.xfail("'affiliates.allizom' in config.getvalue('base_url')",
+                       reason="Bug 1053752 - [stage] Newly created banners don't show up on dashboard page")
     def test_user_can_create_banner(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
