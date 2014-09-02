@@ -20,7 +20,6 @@ class TestProfilePage:
 
     @credentials
     @destructive
-    @pytest.mark.xfail(reason='Bug 1040085 - [dev] [stage] The name displayed on the profile page is not matching the name in page header')
     def test_edit_profile_change_display_name(self, mozwebqa):
         cur_date_time = datetime.now()
 
