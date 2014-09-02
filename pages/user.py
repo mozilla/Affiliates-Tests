@@ -23,12 +23,6 @@ class EditProfile(Base):
     _milestones_section_locator = (By.ID, 'milestones')
     _newsletter_form_locator = (By.ID, 'newsletter-form')
 
-    @property
-    def view_website(self):
-        return str(self.selenium.find_element(*self._view_website_locator).text)
-
-    def is_website_visible(self):
-        return self.is_element_visible(*self._view_website_locator)
 
     def click_edit_profile(self):
         self.selenium.find_element(*self._edit_profile_locator).click()
