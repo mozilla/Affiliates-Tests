@@ -47,20 +47,21 @@ class TestProfilePage:
 
     @credentials
     @destructive
-    @pytest.mark.xfail("'affiliates.allizom' in config.getvalue('base_url')",
-                       reason="Bug 1053713 - [stage] Updating profile website the second time does not show up on profile page")
     def test_edit_profile_set_website(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
         edit_page = home_page.click_profile()
         edit_page_modal = edit_page.click_edit_profile()
 
-        edit_page_modal.set_website('http://wiki.mozilla.com/')
+        url = 'http://wiki.mozilla.org/' + str(datetime.now())
+
+        edit_page_modal.set_website(url)
         edit_page_modal.click_save_my_changes()
-        Assert.true(edit_page.is_website_visible())
-        Assert.equal(edit_page.view_website, 'http://wiki.mozilla.com/',
-                     "Failed because expected 'http://wiki.mozilla.com' but returned "
-                     + edit_page.view_website)
+        edit_page_modal = edit_page.click_edit_profile()
+
+        Assert.equal(edit_page_modal.website, url,
+                     "Failed because expected " + url + " but returned "
+                     + edit_page_modal.website)
 
         # verify user can leave website field empty
         edit_page_modal = edit_page.click_edit_profile()
