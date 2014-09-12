@@ -21,55 +21,89 @@ class TestProfilePage:
     @credentials
     @destructive
     def test_edit_profile_change_display_name(self, mozwebqa):
-        cur_date_time = datetime.now()
+        new_username = "%s: %s" % \
+            (mozwebqa.credentials['default']['name'], str(datetime.now()))
 
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
-        current_username = home_page.username
-        new_username = mozwebqa.credentials['default']['name'] + str(cur_date_time)
+        profile_page = home_page.click_profile()
 
-        edit_page = home_page.click_profile()
-        edit_page_modal = edit_page.click_edit_profile()
+        # verify changing username, update username to include a timestamp
+        profile_page.update_profile_name(new_username)
+        actual_username = profile_page.profile_username
 
-        edit_page_modal.set_display_name(new_username)
-        edit_page_modal.click_cancel()
-        Assert.equal(edit_page.username, current_username)
+        Assert.equal(actual_username , new_username,
+            "Failed: username on profile page failed to update. Expected: '%s' \
+            , but returned '%s'" %
+            (new_username, actual_username))
 
-        edit_page_modal = edit_page.click_edit_profile()
-        edit_page_modal.set_display_name(new_username)
-        edit_page_modal.click_save_my_changes()
-        Assert.equal(edit_page.get_expected_user(new_username.upper()), new_username.upper())
+        leader_board_page = profile_page.click_leaderboard_link()
 
-        # revert changes
-        edit_page_modal = edit_page.click_edit_profile()
-        edit_page_modal.set_display_name(current_username)
-        edit_page_modal.click_save_my_changes()
+        Assert.equal(leader_board_page.username, new_username.upper(),
+            "Failed: username in header of leaderboard failed to update. \
+            Expected '%s', but returned '%s'" %
+            (new_username.upper(), leader_board_page.username))
+
+        # verify username persists after logging out and then logging back in
+        logged_out = profile_page.logout()
+        home_page = logged_out.login()
+        profile_page = home_page.click_profile()
+
+        actual_username = profile_page.profile_username
+
+        Assert.equal(actual_username, new_username,
+            "Failed: update to username did not persist after logout. \
+            Expected '%s', but returned '%s'" %
+            (new_username, actual_username))
+
+        # verify user can leave username field empty
+        profile_page.update_profile_name("")
+        actual_username = profile_page.profile_username
+
+        Assert.equal(actual_username, "Affiliate",
+            "Failed: leaving username blank should default profile username \
+            to 'Affiliate'. Expected 'Affiliate', but returned '%s'" %
+            actual_username)
 
     @credentials
     @destructive
-    def test_edit_profile_set_website(self, mozwebqa):
+    def test_edit_profile_website(self, mozwebqa):
+        new_url = 'wiki.mozilla.org/'  + str(datetime.now())
+
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
-        edit_page = home_page.click_profile()
-        edit_page_modal = edit_page.click_edit_profile()
+        profile_page = home_page.click_profile()
 
-        url = 'http://wiki.mozilla.org/' + str(datetime.now())
+        # update profile website to include a timestamp
+        profile_page.update_profile_website(new_url)
+        actual_website = profile_page.profile_website
 
-        edit_page_modal.set_website(url)
-        edit_page_modal.click_save_my_changes()
-        edit_page_modal = edit_page.click_edit_profile()
+        Assert.equal(actual_website, new_url,
+                     "Failed: update to website on profile edit page. \
+                     Expected '%s' but returned '%s'" %
+                     (new_url, actual_website))
 
-        Assert.equal(edit_page_modal.website, url,
-                     "Failed because expected " + url + " but returned "
-                     + edit_page_modal.website)
+        # verify username persists after logging out and then logging back in
+        logged_out = profile_page.logout()
+        home_page = logged_out.login()
+        profile_page = home_page.click_profile()
+
+        actual_website = profile_page.profile_website
+
+        Assert.equal(actual_website, new_url,
+                     "Failed:update to website did not persist after logout. \
+                     Expected '%s', but returned '%s'" %
+                     (new_url, actual_website))
 
         # verify user can leave website field empty
-        edit_page_modal = edit_page.click_edit_profile()
-        edit_page_modal.set_website('')
-        edit_page_modal.click_save_my_changes()
-        edit_page_modal = edit_page.click_edit_profile()
-        Assert.equal(edit_page_modal.website, '',
-                     'Clearing the website field failed.')
+        profile_page.update_profile_website("")
+        actual_website = profile_page.profile_website
+
+        Assert.equal(actual_website, "",
+                     "Failed: user can set webset url to an empty string. \
+                      Expected '', returned '%s'" %
+                      actual_website)
+
 
     @credentials
     @nondestructive

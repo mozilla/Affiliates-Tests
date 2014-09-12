@@ -15,7 +15,8 @@ from pages.base import Base
 class EditProfile(Base):
 
     _edit_profile_locator = (By.ID, 'edit-profile-link')
-    _view_website_locator = (By.CSS_SELECTOR, 'p.website a')
+    _success_profile_updated = (By.CSS_SELECTOR, '.notice.success p')
+    _profile_username_locator = (By.CSS_SELECTOR, 'h1.page-title')
     _stats_section_locator = (By.ID, 'stats')
     _stats_ranking_locator = (By.CSS_SELECTOR, 'section#stats div ul.stats li.ranking')
     _stats_banner_locator = (By.CSS_SELECTOR, 'section#stats div ul.stats li.banners')
@@ -58,12 +59,34 @@ class EditProfile(Base):
     def is_newsletter_form_visible(self):
         return self.is_element_visible(*self._newsletter_form_locator)
 
-    def get_expected_user(self, user):
-        try:
-            WebDriverWait(self.selenium, self.timeout).until(lambda s: self.username != user)
-        except TimeoutException:
-            pass
-        return self.username
+    @property
+    def profile_username(self):
+        username_field = self.selenium.find_element(
+            *self._profile_username_locator).text
+        # strip 'Name: '  from the username field
+        parsed_username = username_field[6:]
+        return parsed_username
+
+    @property
+    def profile_website(self):
+        edit_modal = self.click_edit_profile()
+        url = edit_modal.website
+        edit_modal.click_cancel()
+        return url
+
+    def update_profile_name(self, username):
+        edit_modal = self.click_edit_profile()
+        edit_modal.set_display_name(username)
+        edit_modal.click_save_my_changes()
+        WebDriverWait(self.selenium, self.timeout).until(
+            lambda s: self.is_element_visible(*self._success_profile_updated))
+
+    def update_profile_website(self, url):
+        edit_modal = self.click_edit_profile()
+        edit_modal.set_website(url)
+        edit_modal.click_save_my_changes()
+        WebDriverWait(self.selenium, self.timeout).until(
+            lambda s: self.is_element_visible(*self._success_profile_updated))
 
     class EditProfileModal(Page):
 
