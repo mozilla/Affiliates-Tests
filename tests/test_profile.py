@@ -68,7 +68,7 @@ class TestProfilePage:
     @credentials
     @destructive
     def test_edit_profile_website(self, mozwebqa):
-        new_url = 'wiki.mozilla.org/'  + str(datetime.now())
+        new_url = 'http://wiki.mozilla.org/'  + datetime.utcnow().strftime("%s")
 
         start_page = StartPage(mozwebqa)
         home_page = start_page.login()
@@ -79,7 +79,7 @@ class TestProfilePage:
         actual_website = profile_page.profile_website
 
         Assert.equal(actual_website, new_url,
-                     "Failed: update to website on profile edit page. \
+                     "update to website on profile edit page. \
                      Expected '%s' but returned '%s'" %
                      (new_url, actual_website))
 
@@ -91,7 +91,7 @@ class TestProfilePage:
         actual_website = profile_page.profile_website
 
         Assert.equal(actual_website, new_url,
-                     "Failed:update to website did not persist after logout. \
+                     "update to website did not persist after logout. \
                      Expected '%s', but returned '%s'" %
                      (new_url, actual_website))
 
@@ -100,7 +100,7 @@ class TestProfilePage:
         actual_website = profile_page.profile_website
 
         Assert.equal(actual_website, "",
-                     "Failed: user can set webset url to an empty string. \
+                     "user can't set website URL to an empty string. \
                       Expected '', returned '%s'" %
                       actual_website)
 
