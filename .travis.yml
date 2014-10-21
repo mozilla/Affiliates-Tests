@@ -17,4 +17,4 @@ env:
 
 notifications:
   email:
-    - joshua.moravec@gmail.com
+    - webqa-ci@mozilla.org
