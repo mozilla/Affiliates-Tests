@@ -11,21 +11,18 @@ from unittestzero import Assert
 
 from pages.start_page import StartPage
 
-credentials = pytest.mark.credentials
-nondestructive = pytest.mark.nondestructive
 destructive = pytest.mark.destructive
 
 
 class TestProfilePage:
 
-    @credentials
     @destructive
     def test_edit_profile_change_display_name(self, mozwebqa):
-        new_username = "%s: %s" % \
-            (mozwebqa.credentials['default']['name'], str(datetime.now()))
+        new_username = "Testbot: %s" % (datetime.now())
 
         start_page = StartPage(mozwebqa)
-        home_page = start_page.login()
+        credentials = start_page.get_new_persona_credentials()
+        home_page = start_page.login_with_credentials(credentials)
         profile_page = home_page.click_profile()
 
         # verify changing username, update username to include a timestamp
@@ -46,7 +43,7 @@ class TestProfilePage:
 
         # verify username persists after logging out and then logging back in
         logged_out = profile_page.logout()
-        home_page = logged_out.login()
+        home_page = logged_out.login_with_credentials(credentials)
         profile_page = home_page.click_profile()
 
         actual_username = profile_page.profile_username
@@ -65,13 +62,14 @@ class TestProfilePage:
             to 'Affiliate'. Expected 'Affiliate', but returned '%s'" %
             actual_username)
 
-    @credentials
     @destructive
-    def test_edit_profile_website(self, mozwebqa):
+    def test_edit_profiles_website(self, mozwebqa):
+        start_page = StartPage(mozwebqa)
         new_url = 'http://wiki.mozilla.org/'  + datetime.utcnow().strftime("%s")
 
-        start_page = StartPage(mozwebqa)
-        home_page = start_page.login()
+        credentials = start_page.get_new_persona_credentials()
+
+        home_page = start_page.login_with_credentials(credentials)
         profile_page = home_page.click_profile()
 
         # update profile website to include a timestamp
@@ -85,7 +83,7 @@ class TestProfilePage:
 
         # verify username persists after logging out and then logging back in
         logged_out = profile_page.logout()
-        home_page = logged_out.login()
+        home_page = logged_out.login_with_credentials(credentials)
         profile_page = home_page.click_profile()
 
         actual_website = profile_page.profile_website
@@ -105,11 +103,11 @@ class TestProfilePage:
                       actual_website)
 
 
-    @credentials
-    @nondestructive
+    @destructive
     def test_verify_layout_logged_in_user(self, mozwebqa):
         start_page = StartPage(mozwebqa)
-        home_page = start_page.login()
+        credentials = start_page.get_new_persona_credentials()
+        home_page = start_page.login_with_credentials(credentials)
         edit_page = home_page.click_profile()
 
         Assert.true(edit_page.is_stats_section_visible())
@@ -118,20 +116,20 @@ class TestProfilePage:
         Assert.true(edit_page.is_stats_banners_visible())
         Assert.not_none(edit_page.stats_banners, 'Stats banners is null')
         Assert.true(edit_page.is_stats_clicks_visible())
-        Assert.not_none(edit_page.stats_clicks, 'Stats clickss is null')
+        Assert.not_none(edit_page.stats_clicks, 'Stats clicks is null')
         Assert.true(edit_page.is_milestones_section_visible())
         Assert.true(edit_page.is_newsletter_form_visible())
 
-    @credentials
     @destructive
     def test_new_account_creation(self, mozwebqa):
         start_page = StartPage(mozwebqa)
-        home_page = start_page.create_new_account()
+        credentials = start_page.get_new_persona_credentials()
+        home_page = start_page.login_with_credentials(credentials)
 
         Assert.true(home_page.is_user_logged_in)
 
         logged_out = home_page.logout()
         Assert.false(logged_out.is_user_logged_in)
 
-        logged_in = logged_out.login()
+        logged_in = logged_out.login_with_credentials(credentials)
         Assert.true(logged_in.is_user_logged_in)
