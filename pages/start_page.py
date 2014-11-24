@@ -32,11 +32,8 @@ class StartPage(Base):
         from pages.home import Home
         return Home(self.testsetup)
 
-    def create_new_account(self):
-        """Retrieves a vouched email and password and logs in"""
-
-        credentials = self.get_new_user()
-
+    def login_with_credentials(self, credentials):
+        """Log in using a vouched email from personatestuser.org"""
         self.click_login_browser_id()
         from browserid import BrowserID
         pop_up = BrowserID(self.selenium, self.timeout)

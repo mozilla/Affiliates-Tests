@@ -43,7 +43,7 @@ class Base(Page):
     def username(self):
         return self.selenium.find_element(*self._username_locator).text
 
-    def get_new_user(self):
+    def get_new_persona_credentials(self):
         url = "http://personatestuser.org/email/"
         response = urllib2.urlopen(url).read()
         decode = json.loads(response)
