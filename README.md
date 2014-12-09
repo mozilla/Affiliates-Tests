@@ -70,8 +70,7 @@ You will need to install Selenium, py.test, unittestzero and some other project 
 
 Now using pip we'll install the packages we need (which are listed in requirements.txt)
 
-
-    pip install -Ur requirements.txt --use-mirrors
+    pip install -Ur requirements.txt
 
 If you are running on Ubuntu/Debian you will need to do following first:
 
