@@ -91,9 +91,9 @@ To run the user account tests:
 
         py.test --credentials=~/credentials.yaml
 
-For more command-line options access: [https://github.com/davehunt/pytest-mozwebqa][PyTest]
+For more command-line options access: [https://github.com/mozilla/pytest-mozwebqa][PyTest]
 
-[PyTest]: https://github.com/davehunt/pytest-mozwebqa
+[PyTest]: https://github.com/mozilla/pytest-mozwebqa
 
 ### Virtual Environments (Optional/Intermediate level)
 
