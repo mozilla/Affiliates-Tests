@@ -24,7 +24,6 @@ class EditProfile(Base):
     _milestones_section_locator = (By.ID, 'milestones')
     _newsletter_form_locator = (By.ID, 'newsletter-form')
 
-
     def click_edit_profile(self):
         self.selenium.find_element(*self._edit_profile_locator).click()
         return self.EditProfileModal(self.testsetup)
@@ -139,4 +138,4 @@ class EditProfile(Base):
         def click_cancel(self):
             self._root_element.find_element(*self._cancel_locator).click()
             WebDriverWait(self.selenium, self.timeout).until(
-                lambda s: self.is_element_not_visible(*self._modal_locator))
+                lambda s: not self.is_element_present(*self._modal_locator))
