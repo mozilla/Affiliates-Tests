@@ -97,7 +97,7 @@ class EditProfile(Base):
         _website_label_locator = (By.CSS_SELECTOR, '#modal label[for="id_website"]')
         _edit_website_locator = (By.CSS_SELECTOR, '#modal input#id_website')
         _save_locator = (By.CSS_SELECTOR, '.button.go')
-        _cancel_locator = (By.CSS_SELECTOR, '.button.close')
+        _cancel_locator = (By.CSS_SELECTOR, '.button.secondary.close')
 
         def __init__(self, testsetup):
             Page.__init__(self, testsetup)
