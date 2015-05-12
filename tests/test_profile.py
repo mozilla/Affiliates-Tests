@@ -21,8 +21,8 @@ class TestProfilePage:
         new_username = "Testbot: %s" % (datetime.now())
 
         start_page = StartPage(mozwebqa)
-        credentials = start_page.get_new_persona_credentials()
-        home_page = start_page.login_with_credentials(credentials)
+        email, password = start_page._create_persona_test_user()
+        home_page = start_page.login(email, password)
         profile_page = home_page.click_profile()
 
         # verify changing username, update username to include a timestamp
@@ -43,7 +43,7 @@ class TestProfilePage:
 
         # verify username persists after logging out and then logging back in
         logged_out = profile_page.logout()
-        home_page = logged_out.login_with_credentials(credentials)
+        home_page = logged_out.login(email, password)
         profile_page = home_page.click_profile()
 
         actual_username = profile_page.profile_username
@@ -67,9 +67,9 @@ class TestProfilePage:
         start_page = StartPage(mozwebqa)
         new_url = 'http://wiki.mozilla.org/'  + datetime.utcnow().strftime("%s")
 
-        credentials = start_page.get_new_persona_credentials()
+        email, password = start_page._create_persona_test_user()
 
-        home_page = start_page.login_with_credentials(credentials)
+        home_page = start_page.login(email, password)
         profile_page = home_page.click_profile()
 
         # update profile website to include a timestamp
@@ -83,7 +83,7 @@ class TestProfilePage:
 
         # verify username persists after logging out and then logging back in
         logged_out = profile_page.logout()
-        home_page = logged_out.login_with_credentials(credentials)
+        home_page = logged_out.login(email, password)
         profile_page = home_page.click_profile()
 
         actual_website = profile_page.profile_website
@@ -102,12 +102,10 @@ class TestProfilePage:
                       Expected '', returned '%s'" %
                       actual_website)
 
-
     @destructive
     def test_verify_layout_logged_in_user(self, mozwebqa):
         start_page = StartPage(mozwebqa)
-        credentials = start_page.get_new_persona_credentials()
-        home_page = start_page.login_with_credentials(credentials)
+        home_page = start_page.login()
         edit_page = home_page.click_profile()
 
         Assert.true(edit_page.is_stats_section_visible())
@@ -123,13 +121,13 @@ class TestProfilePage:
     @destructive
     def test_new_account_creation(self, mozwebqa):
         start_page = StartPage(mozwebqa)
-        credentials = start_page.get_new_persona_credentials()
-        home_page = start_page.login_with_credentials(credentials)
+        email, password = start_page._create_persona_test_user()
+        home_page = start_page.login(email, password)
 
         Assert.true(home_page.is_user_logged_in)
 
         logged_out = home_page.logout()
         Assert.false(logged_out.is_user_logged_in)
 
-        logged_in = logged_out.login_with_credentials(credentials)
+        logged_in = logged_out.login(email, password)
         Assert.true(logged_in.is_user_logged_in)

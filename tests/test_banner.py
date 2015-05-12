@@ -9,13 +9,11 @@ import pytest
 from pages.start_page import StartPage
 from unittestzero import Assert
 
-credentials = pytest.mark.credentials
 destructive = pytest.mark.destructive
 
 
 class TestBanners:
 
-    @credentials
     @destructive
     @pytest.mark.xfail("'affiliates.allizom' in config.getvalue('base_url')",
                        reason="Bug 1053752 - [stage] Newly created banners don't show up on dashboard page")
