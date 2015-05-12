@@ -83,17 +83,7 @@ to install the required Python libraries.
 
 To run tests locally it's a simple case of calling ```py.test``` from the Affiliates-Tests directory.
 
-To run the user account tests:
-
-1. Create an account on the Affiliates instance
-2. Edit the ```credentials.yaml``` with your credentials
-3. Run the tests with:
-
-        py.test --credentials=~/credentials.yaml
-
-For more command-line options access: [https://github.com/mozilla/pytest-mozwebqa][PyTest]
-
-[PyTest]: https://github.com/mozilla/pytest-mozwebqa
+For more command-line options see the [pytest-mozwebqa documentation](https://github.com/mozilla/pytest-mozwebqa)
 
 ### Virtual Environments (Optional/Intermediate level)
 

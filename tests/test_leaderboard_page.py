@@ -10,13 +10,11 @@ import pytest
 from pages.start_page import StartPage
 from unittestzero import Assert
 
-credentials = pytest.mark.credentials
 nondestructive = pytest.mark.nondestructive
 
 
 class TestLeaderboardPage():
 
-    @credentials
     @nondestructive
     def test_logged_in_user_can_reach_leaderboard(self, mozwebqa):
         start_page = StartPage(mozwebqa)
