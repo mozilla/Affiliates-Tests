@@ -1,3 +1,23 @@
+End of Life
+============
+The Affilates project is in the process of being end-of-lifed. By the end of the
+year the project will be shut down. There is still active discussion as to if
+existing banner image HTML snippets will continue to work. More information will
+be provided as the community discusses the project shutdown sequence.
+
+In the mean time, we currently have no plans to create new end-to-end test cases
+for this project. As features are slowly removed help will be needed removing
+the effected test cases.
+
+For example, in the near future the ability to create new Affliates accounts and
+new banners will be removed. As this occurs git issues will be filed.
+
+[Read more here][Read more here] for more information or to contact the team with
+question, thoughts, or concerns.
+
+[Read more here]: https://blog.mozilla.org/community/2015/05/12/shutting-down-firefox-affiliates/
+
+
 Affiliates Tests
 ====================
 
@@ -36,7 +56,8 @@ While we take pains to keep our documentation updated, the best source of inform
 Getting set up
 --------------
 
-It's easy to get set up: just some pieces of software to install and in you'll be running the tests! 
+It's easy to get set up to run the test suite. Install the following software to your development environment
+and you'll be up and running in no time.
 
 ### Install Git
 
@@ -116,4 +137,3 @@ This software is licensed under the [MPL][MPL] 2.0:
     http://mozilla.org/MPL/2.0/.
 
 [MPL]: http://www.mozilla.org/MPL/2.0/
-
