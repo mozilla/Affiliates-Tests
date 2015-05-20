@@ -16,8 +16,7 @@ class Home(Base):
     _page_url = '/dashboard'
 
     _page_header_locator = (By.CSS_SELECTOR, '.page-head .page-title')
-    _about_content_nav_locator = (By.CSS_SELECTOR,
-        'ul#nav-main-menu li:nth-of-type(1) a')
+    _about_content_nav_locator = (By.CSS_SELECTOR, 'ul#nav-main-menu li:nth-of-type(1) a')
     _new_banner_button_locator = (By.CSS_SELECTOR, '.button.go')
     _banners_list_locator = (By.CSS_SELECTOR, '.banners-list .banner')
 

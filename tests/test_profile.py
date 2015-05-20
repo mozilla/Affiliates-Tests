@@ -29,17 +29,17 @@ class TestProfilePage:
         profile_page.update_profile_name(new_username)
         actual_username = profile_page.profile_username
 
-        Assert.equal(actual_username , new_username,
-            "Failed: username on profile page failed to update. Expected: '%s' \
-            , but returned '%s'" %
-            (new_username, actual_username))
+        Assert.equal(actual_username, new_username,
+                     "Failed: username on profile page failed to update. "
+                     "Expected: '%s', but returned '%s'" % (
+                         new_username, actual_username))
 
         leader_board_page = profile_page.click_leaderboard_link()
 
         Assert.equal(leader_board_page.username, new_username.upper(),
-            "Failed: username in header of leaderboard failed to update. \
-            Expected '%s', but returned '%s'" %
-            (new_username.upper(), leader_board_page.username))
+                     "Failed: username in header of leaderboard failed to update. "
+                     "Expected '%s', but returned '%s'" % (
+                         new_username.upper(), leader_board_page.username))
 
         # verify username persists after logging out and then logging back in
         logged_out = profile_page.logout()
@@ -49,23 +49,22 @@ class TestProfilePage:
         actual_username = profile_page.profile_username
 
         Assert.equal(actual_username, new_username,
-            "Failed: update to username did not persist after logout. \
-            Expected '%s', but returned '%s'" %
-            (new_username, actual_username))
+                     "Failed: update to username did not persist after logout. "
+                     "Expected '%s', but returned '%s'" % (
+                         new_username, actual_username))
 
         # verify user can leave username field empty
         profile_page.update_profile_name("")
         actual_username = profile_page.profile_username
 
         Assert.equal(actual_username, "Affiliate",
-            "Failed: leaving username blank should default profile username \
-            to 'Affiliate'. Expected 'Affiliate', but returned '%s'" %
-            actual_username)
+                     "Failed: leaving username blank should default profile username "
+                     "to 'Affiliate'. Expected 'Affiliate', but returned '%s'" % actual_username)
 
     @destructive
     def test_edit_profiles_website(self, mozwebqa):
         start_page = StartPage(mozwebqa)
-        new_url = 'http://wiki.mozilla.org/'  + datetime.utcnow().strftime("%s")
+        new_url = 'http://wiki.mozilla.org/' + datetime.utcnow().strftime("%s")
 
         email, password = start_page._create_persona_test_user()
 
@@ -98,9 +97,8 @@ class TestProfilePage:
         actual_website = profile_page.profile_website
 
         Assert.equal(actual_website, "",
-                     "user can't set website URL to an empty string. \
-                      Expected '', returned '%s'" %
-                      actual_website)
+                     "user can't set website URL to an empty string. "
+                     "Expected '', returned '%s'" % actual_website)
 
     @destructive
     def test_verify_layout_logged_in_user(self, mozwebqa):

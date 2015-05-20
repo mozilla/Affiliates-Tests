@@ -43,13 +43,11 @@ class About(Base):
         return len(self.selenium.find_elements(*self._question_locator))
 
     def questions_text(self, lookup):
-        return self.selenium.find_elements(*self.
-            _question_locator)[lookup].text
+        return self.selenium.find_elements(*self. _question_locator)[lookup].text
 
     @property
     def answers_count(self):
         return len(self.selenium.find_elements(*self._answer_locator))
 
     def answer(self, lookup):
-        return self.selenium.find_elements(*self.
-            _answer_locator)[lookup].text
+        return self.selenium.find_elements(*self._answer_locator)[lookup].text

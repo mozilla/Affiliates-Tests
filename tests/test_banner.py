@@ -37,5 +37,5 @@ class TestBanners:
         # Get the id of the last created banner in the list
         last_banner_id = home_page.banners[len(home_page.banners) - 1].banner_link.split('/')[-2]
 
-        #Check that the new banner is the last on the list of banners
+        # Check that the new banner is the last on the list of banners
         Assert.equal(new_banner_id, last_banner_id)
