@@ -9,22 +9,22 @@ from selenium.common.exceptions import ElementNotVisibleException
 
 class Page(object):
 
-    def __init__(self, testsetup):
-        self.testsetup = testsetup
-        self.base_url = testsetup.base_url
-        self.selenium = testsetup.selenium
-        self.timeout = testsetup.timeout
+    def __init__(self, base_url, selenium):
+        self.base_url = base_url
+        self.selenium = selenium
+        self.timeout = 30
 
     @property
     def page_title(self):
-        WebDriverWait(self.selenium, 10).until(lambda s: self.selenium.title)
+        WebDriverWait(self.selenium, self.timeout).until(lambda s: self.selenium.title)
         return self.selenium.title
 
     @property
     def is_the_current_page(self):
         if self._page_title:
-            WebDriverWait(self.selenium, 10).until(lambda s: self.selenium.title)
-        return self._page_title == self.selenium.title
+            WebDriverWait(self.selenium, self.timeout).until(lambda s: self.selenium.title)
+        assert self._page_title == self.selenium.title
+        return True
 
     @property
     def is_the_current_url(self):
@@ -39,7 +39,7 @@ class Page(object):
             return False
         finally:
             # set back to where you once belonged
-            self.selenium.implicitly_wait(self.testsetup.default_implicit_wait)
+            self.selenium.implicitly_wait(10)
 
     def is_element_visible(self, *locator):
         try:
@@ -56,11 +56,10 @@ class Page(object):
             return True
         finally:
             # set back to where you once belonged
-            self.selenium.implicitly_wait(self.testsetup.default_implicit_wait)
+            self.selenium.implicitly_wait(10)
 
     def open(self, url_fragment):
         self.selenium.get(self.base_url + url_fragment)
-        self.selenium.maximize_window()
 
     @property
     def get_url_current_page(self):

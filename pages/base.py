@@ -3,6 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as expected
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -44,14 +45,13 @@ class Base(Page):
         pop_up = BrowserID(self.selenium, self.timeout)
         pop_up.sign_in(email, password)
         if error:
-            element = self.selenium.find_element(*self._error_locator)
             WebDriverWait(self.selenium, self.timeout).until(
-                lambda s: element.is_displayed())
+                expected.visibility_of_element_located(self._error_locator))
         else:
             WebDriverWait(self.selenium, self.timeout).until(
                 lambda s: self.is_user_logged_in)
             from pages.home import Home
-            return Home(self.testsetup)
+            return Home(self.base_url, self.selenium)
 
     def click_login(self):
         self.selenium.find_element(*self._login_browser_id_locator).click()
@@ -66,18 +66,18 @@ class Base(Page):
         WebDriverWait(self.selenium, self.timeout).until(lambda s: not self.is_user_logged_in)
 
         from pages.start_page import StartPage
-        return StartPage(self.testsetup)
+        return StartPage(self.base_url, self.selenium)
 
     def click_profile(self):
         self._hover_user_menu()
         self.selenium.find_element(*self._profile_locator).click()
         from pages.user import EditProfile
-        return EditProfile(self.testsetup)
+        return EditProfile(self.base_url, self.selenium)
 
     def click_about_nav_button(self):
         self.selenium.find_element(*self._about_content_nav_locator).click()
         from pages.about import About
-        return About(self.testsetup)
+        return About(self.base_url, self.selenium)
 
     @property
     def error(self):

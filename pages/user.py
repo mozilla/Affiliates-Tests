@@ -23,7 +23,7 @@ class EditProfile(Base):
 
     def click_edit_profile(self):
         self.selenium.find_element(*self._edit_profile_locator).click()
-        return self.EditProfileModal(self.testsetup)
+        return self.EditProfileModal(self.base_url, self.selenium)
 
     @property
     def is_stats_section_visible(self):
@@ -101,8 +101,8 @@ class EditProfile(Base):
         _save_locator = (By.CSS_SELECTOR, '.button.go')
         _cancel_locator = (By.CSS_SELECTOR, '.button.secondary.close')
 
-        def __init__(self, testsetup):
-            Page.__init__(self, testsetup)
+        def __init__(self, base_url, selenium):
+            Page.__init__(self, base_url, selenium)
             WebDriverWait(self.selenium, self.timeout).until(
                 lambda s: self.is_element_visible(*self._modal_locator))
             self._root_element = self.selenium.find_element(*self._modal_locator)

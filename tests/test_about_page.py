@@ -10,8 +10,8 @@ from pages.start_page import StartPage
 class TestAboutPage:
 
     @pytest.mark.nondestructive
-    def test_about_page_has_proper_layout(self, mozwebqa, existing_user):
-        start_page = StartPage(mozwebqa)
+    def test_about_page_has_proper_layout(self, base_url, selenium, existing_user):
+        start_page = StartPage(base_url, selenium)
         home_page = start_page.login(existing_user['email'], existing_user['password'])
         about_page = home_page.click_about_nav_link()
         assert about_page.is_the_current_url

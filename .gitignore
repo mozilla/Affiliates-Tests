@@ -3,4 +3,5 @@
 *.komodoproject
 *.project
 *.pydevproject
-results/
+.cache
+__pycache__

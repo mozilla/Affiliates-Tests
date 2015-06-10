@@ -5,7 +5,6 @@
 from selenium.webdriver.common.by import By
 
 from pages.base import Base
-from page import Page
 
 
 class Home(Base):
@@ -24,18 +23,17 @@ class Home(Base):
     def click_about_nav_link(self):
         self.selenium.find_element(*self._about_content_nav_locator).click()
         from pages.about import About
-        return About(self.testsetup)
+        return About(self.base_url, self.selenium)
 
     @property
     def banners(self):
-        return [self.Banners(self.testsetup, banner) for banner in self.selenium.find_elements(*self._banners_list_locator)]
+        return [self.Banners(banner) for banner in self.selenium.find_elements(*self._banners_list_locator)]
 
-    class Banners(Page):
+    class Banners(object):
 
         _banner_id_locator = (By.CSS_SELECTOR, 'a')
 
-        def __init__(self, testsetup, banner):
-            Page.__init__(self, testsetup)
+        def __init__(self, banner):
             self._root_element = banner
 
         @property

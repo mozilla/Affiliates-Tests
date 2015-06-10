@@ -8,6 +8,12 @@ import urllib2
 import pytest
 
 
+@pytest.fixture(scope='session')
+def capabilities(capabilities):
+    capabilities.setdefault('tags', []).append('affiliates')
+    return capabilities
+
+
 @pytest.fixture
 def existing_user(variables):
     return variables['users']['default']
@@ -19,3 +25,10 @@ def new_user(variables):
     user = json.loads(response)
     return {'email': user['email'],
             'password': user['pass']}
+
+
+@pytest.fixture
+def selenium(selenium):
+    selenium.implicitly_wait(10)
+    selenium.maximize_window()
+    return selenium

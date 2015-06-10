@@ -9,7 +9,7 @@ class StartPage(Base):
 
     _page_title = 'Firefox Affiliates'
 
-    def __init__(self, testsetup, open_url=True):
-        Base.__init__(self, testsetup)
+    def __init__(self, base_url, selenium, open_url=True):
+        Base.__init__(self, base_url, selenium)
         if open_url:
-            self.open('/')
+            self.selenium.get(base_url)

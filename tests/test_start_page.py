@@ -10,14 +10,14 @@ import pytest
 class TestStartPage:
 
     @pytest.mark.nondestructive
-    def test_start_page_has_proper_titles(self, mozwebqa):
-        start_page = StartPage(mozwebqa)
+    def test_start_page_has_proper_titles(self, base_url, selenium):
+        start_page = StartPage(base_url, selenium)
         assert start_page.is_the_current_page
         assert 'Important Notice: Firefox Affiliates is being discontinued' == start_page.header
 
     @pytest.mark.nondestructive
-    def test_login_logout_works_properly(self, mozwebqa, existing_user):
-        start_page = StartPage(mozwebqa)
+    def test_login_logout_works_properly(self, base_url, selenium, existing_user):
+        start_page = StartPage(base_url, selenium)
         home_page = start_page.login(existing_user['email'], existing_user['password'])
         assert home_page.is_user_logged_in
         assert 'Dashboard' == home_page.header
