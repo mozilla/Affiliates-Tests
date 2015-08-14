@@ -25,7 +25,6 @@ class Base(Page):
     _username_locator = (By.CSS_SELECTOR, '#nav-main-menu > li.user > a')
 
     _about_content_nav_locator = (By.CSS_SELECTOR, '#nav-main-menu li:nth-of-type(1) a')
-    _leaderboard_link_locator = (By.CSS_SELECTOR, '#nav-main-menu > li:nth-of-type(2) a')
 
     @property
     def page_title(self):
@@ -85,8 +84,3 @@ class Base(Page):
         self.selenium.find_element(*self._about_content_nav_locator).click()
         from pages.about import About
         return About(self.testsetup)
-
-    def click_leaderboard_link(self):
-        self.selenium.find_element(*self._leaderboard_link_locator).click()
-        from pages.leaderboard import LeaderboardPage
-        return LeaderboardPage(self.testsetup)

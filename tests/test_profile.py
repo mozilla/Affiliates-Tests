@@ -34,13 +34,6 @@ class TestProfilePage:
                      "Expected: '%s', but returned '%s'" % (
                          new_username, actual_username))
 
-        leader_board_page = profile_page.click_leaderboard_link()
-
-        Assert.equal(leader_board_page.username, new_username.upper(),
-                     "Failed: username in header of leaderboard failed to update. "
-                     "Expected '%s', but returned '%s'" % (
-                         new_username.upper(), leader_board_page.username))
-
         # verify username persists after logging out and then logging back in
         logged_out = profile_page.logout()
         home_page = logged_out.login(email, password)
