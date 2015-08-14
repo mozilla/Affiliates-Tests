@@ -18,14 +18,14 @@ class TestStartPage:
     def test_start_page_has_proper_titles(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         Assert.true(start_page.is_the_current_page)
-        Assert.equal(start_page.header, 'Become a Firefox Affiliate today!')
+        Assert.equal(start_page.header, 'Important Notice: Firefox Affiliates is being discontinued')
 
     @nondestructive
-    def test_login_logout_works_properly(self, mozwebqa):
+    def test_login_logout_works_properly(self, mozwebqa, existing_user):
         start_page = StartPage(mozwebqa)
-        home_page = start_page.login()
+        home_page = start_page.login(existing_user['email'], existing_user['password'])
         Assert.true(home_page.is_user_logged_in, 'User not logged in')
         Assert.equal(home_page.header, 'Dashboard')
         home_page.logout()
         Assert.false(home_page.is_user_logged_in, 'User logged in')
-        Assert.equal(start_page.header, 'Become a Firefox Affiliate today!')
+        Assert.equal(start_page.header, 'Important Notice: Firefox Affiliates is being discontinued')

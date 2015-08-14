@@ -15,9 +15,9 @@ nondestructive = pytest.mark.nondestructive
 class TestAboutPage:
 
     @nondestructive
-    def test_about_page_has_proper_layout(self, mozwebqa):
+    def test_about_page_has_proper_layout(self, mozwebqa, existing_user):
         start_page = StartPage(mozwebqa)
-        home_page = start_page.login()
+        home_page = start_page.login(existing_user['email'], existing_user['password'])
         about_page = home_page.click_about_nav_link()
         Assert.true(about_page.is_the_current_url)
         Assert.equal(about_page.faq_header, 'Frequently Asked Questions',

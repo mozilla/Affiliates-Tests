@@ -1,11 +1,6 @@
-#!/usr/bin/env python
-
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-import urllib2
-import json
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -42,14 +37,7 @@ class Base(Page):
     def username(self):
         return self.selenium.find_element(*self._username_locator).text
 
-    def _create_persona_test_user(self):
-        response = urllib2.urlopen('http://personatestuser.org/email/').read()
-        user = json.loads(response)
-        return user['email'], user['pass']
-
-    def login(self, email=None, password=None):
-        if not all([email, password]):
-            email, password = self._create_persona_test_user()
+    def login(self, email, password):
         self.click_login()
         from browserid import BrowserID
         pop_up = BrowserID(self.selenium, self.timeout)

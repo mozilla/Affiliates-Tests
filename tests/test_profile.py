@@ -7,6 +7,8 @@
 from datetime import datetime
 
 import pytest
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 from unittestzero import Assert
 
 from pages.start_page import StartPage
@@ -17,12 +19,11 @@ destructive = pytest.mark.destructive
 class TestProfilePage:
 
     @destructive
-    def test_edit_profile_change_display_name(self, mozwebqa):
+    def test_edit_profile_change_display_name(self, mozwebqa, existing_user):
         new_username = "Testbot: %s" % (datetime.now())
 
         start_page = StartPage(mozwebqa)
-        email, password = start_page._create_persona_test_user()
-        home_page = start_page.login(email, password)
+        home_page = start_page.login(existing_user['email'], existing_user['password'])
         profile_page = home_page.click_profile()
 
         # verify changing username, update username to include a timestamp
@@ -36,7 +37,7 @@ class TestProfilePage:
 
         # verify username persists after logging out and then logging back in
         logged_out = profile_page.logout()
-        home_page = logged_out.login(email, password)
+        home_page = logged_out.login(existing_user['email'], existing_user['password'])
         profile_page = home_page.click_profile()
 
         actual_username = profile_page.profile_username
@@ -55,13 +56,10 @@ class TestProfilePage:
                      "to 'Affiliate'. Expected 'Affiliate', but returned '%s'" % actual_username)
 
     @destructive
-    def test_edit_profiles_website(self, mozwebqa):
+    def test_edit_profiles_website(self, mozwebqa, existing_user):
         start_page = StartPage(mozwebqa)
         new_url = 'http://wiki.mozilla.org/' + datetime.utcnow().strftime("%s")
-
-        email, password = start_page._create_persona_test_user()
-
-        home_page = start_page.login(email, password)
+        home_page = start_page.login(existing_user['email'], existing_user['password'])
         profile_page = home_page.click_profile()
 
         # update profile website to include a timestamp
@@ -75,7 +73,7 @@ class TestProfilePage:
 
         # verify username persists after logging out and then logging back in
         logged_out = profile_page.logout()
-        home_page = logged_out.login(email, password)
+        home_page = logged_out.login(existing_user['email'], existing_user['password'])
         profile_page = home_page.click_profile()
 
         actual_website = profile_page.profile_website
@@ -94,9 +92,9 @@ class TestProfilePage:
                      "Expected '', returned '%s'" % actual_website)
 
     @destructive
-    def test_verify_layout_logged_in_user(self, mozwebqa):
+    def test_verify_layout_logged_in_user(self, mozwebqa, existing_user):
         start_page = StartPage(mozwebqa)
-        home_page = start_page.login()
+        home_page = start_page.login(existing_user['email'], existing_user['password'])
         edit_page = home_page.click_profile()
 
         Assert.true(edit_page.is_stats_section_visible())
@@ -107,18 +105,14 @@ class TestProfilePage:
         Assert.true(edit_page.is_stats_clicks_visible())
         Assert.not_none(edit_page.stats_clicks, 'Stats clicks is null')
         Assert.true(edit_page.is_milestones_section_visible())
-        Assert.true(edit_page.is_newsletter_form_visible())
 
     @destructive
-    def test_new_account_creation(self, mozwebqa):
+    def test_new_account_creation(self, mozwebqa, new_user):
         start_page = StartPage(mozwebqa)
-        email, password = start_page._create_persona_test_user()
-        home_page = start_page.login(email, password)
-
-        Assert.true(home_page.is_user_logged_in)
-
-        logged_out = home_page.logout()
-        Assert.false(logged_out.is_user_logged_in)
-
-        logged_in = logged_out.login(email, password)
-        Assert.true(logged_in.is_user_logged_in)
+        start_page.click_login()
+        from browserid import BrowserID
+        pop_up = BrowserID(mozwebqa.selenium, mozwebqa.timeout)
+        pop_up.sign_in(new_user['email'], new_user['password'])
+        error = mozwebqa.selenium.find_element(By.CLASS_NAME, 'error')
+        WebDriverWait(mozwebqa.selenium, mozwebqa.timeout).until(
+            lambda s: error.text == 'Login failed. Firefox Affiliates has stopped accepting new users.')
