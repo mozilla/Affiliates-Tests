@@ -7,8 +7,6 @@
 from datetime import datetime
 
 import pytest
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from unittestzero import Assert
 
 from pages.start_page import StartPage
@@ -109,10 +107,5 @@ class TestProfilePage:
     @destructive
     def test_new_account_creation(self, mozwebqa, new_user):
         start_page = StartPage(mozwebqa)
-        start_page.click_login()
-        from browserid import BrowserID
-        pop_up = BrowserID(mozwebqa.selenium, mozwebqa.timeout)
-        pop_up.sign_in(new_user['email'], new_user['password'])
-        error = mozwebqa.selenium.find_element(By.CLASS_NAME, 'error')
-        WebDriverWait(mozwebqa.selenium, mozwebqa.timeout).until(
-            lambda s: error.text == 'Login failed. Firefox Affiliates has stopped accepting new users.')
+        start_page.login(new_user['email'], new_user['password'], error=True)
+        assert start_page.error == 'Login failed. Firefox Affiliates has stopped accepting new users.'

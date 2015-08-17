@@ -18,6 +18,7 @@ class Base(Page):
     _logout_locator = (By.CSS_SELECTOR, '#nav-user-submenu li a.browserid-logout')
     _profile_locator = (By.CSS_SELECTOR, '#nav-user-submenu li:nth-of-type(2) a')
     _username_locator = (By.CSS_SELECTOR, '#nav-main-menu > li.user > a')
+    _error_locator = (By.CLASS_NAME, 'error')
 
     _about_content_nav_locator = (By.CSS_SELECTOR, '#nav-main-menu li:nth-of-type(1) a')
 
@@ -37,15 +38,20 @@ class Base(Page):
     def username(self):
         return self.selenium.find_element(*self._username_locator).text
 
-    def login(self, email, password):
+    def login(self, email, password, error=False):
         self.click_login()
         from browserid import BrowserID
         pop_up = BrowserID(self.selenium, self.timeout)
         pop_up.sign_in(email, password)
-        WebDriverWait(self.selenium, self.timeout).until(
-            lambda s: self.is_user_logged_in)
-        from pages.home import Home
-        return Home(self.testsetup)
+        if error:
+            element = self.selenium.find_element(*self._error_locator)
+            WebDriverWait(self.selenium, self.timeout).until(
+                lambda s: element.is_displayed())
+        else:
+            WebDriverWait(self.selenium, self.timeout).until(
+                lambda s: self.is_user_logged_in)
+            from pages.home import Home
+            return Home(self.testsetup)
 
     def click_login(self):
         self.selenium.find_element(*self._login_browser_id_locator).click()
@@ -72,3 +78,7 @@ class Base(Page):
         self.selenium.find_element(*self._about_content_nav_locator).click()
         from pages.about import About
         return About(self.testsetup)
+
+    @property
+    def error(self):
+        return self.selenium.find_element(*self._error_locator).text
