@@ -7,7 +7,6 @@
 import pytest
 
 from pages.start_page import StartPage
-from unittestzero import Assert
 
 destructive = pytest.mark.destructive
 
@@ -28,7 +27,7 @@ class TestBanners:
         create_banner_page.select_size()
         create_banner_page.select_color()
         create_banner_page.click_save()
-        Assert.true(create_banner_page.is_embeded_code_generated)
+        assert create_banner_page.is_embeded_code_generated
 
         # Get the id of the new banner from the page url
         new_banner_id = create_banner_page.get_url_current_page.split('/')[-2]
@@ -38,4 +37,4 @@ class TestBanners:
         last_banner_id = home_page.banners[len(home_page.banners) - 1].banner_link.split('/')[-2]
 
         # Check that the new banner is the last on the list of banners
-        Assert.equal(new_banner_id, last_banner_id)
+        assert new_banner_id == last_banner_id
