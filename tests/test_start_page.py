@@ -6,18 +6,16 @@ from pages.start_page import StartPage
 
 import pytest
 
-nondestructive = pytest.mark.nondestructive
-
 
 class TestStartPage:
 
-    @nondestructive
+    @pytest.mark.nondestructive
     def test_start_page_has_proper_titles(self, mozwebqa):
         start_page = StartPage(mozwebqa)
         assert start_page.is_the_current_page
         assert 'Important Notice: Firefox Affiliates is being discontinued' == start_page.header
 
-    @nondestructive
+    @pytest.mark.nondestructive
     def test_login_logout_works_properly(self, mozwebqa, existing_user):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login(existing_user['email'], existing_user['password'])

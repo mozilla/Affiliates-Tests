@@ -6,12 +6,10 @@ import pytest
 
 from pages.start_page import StartPage
 
-nondestructive = pytest.mark.nondestructive
-
 
 class TestAboutPage:
 
-    @nondestructive
+    @pytest.mark.nondestructive
     def test_about_page_has_proper_layout(self, mozwebqa, existing_user):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login(existing_user['email'], existing_user['password'])
