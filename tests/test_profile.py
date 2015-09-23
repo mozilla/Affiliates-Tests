@@ -4,16 +4,11 @@
 
 from datetime import datetime
 
-import pytest
-
 from pages.start_page import StartPage
-
-destructive = pytest.mark.destructive
 
 
 class TestProfilePage:
 
-    @destructive
     def test_edit_profile_change_display_name(self, mozwebqa, existing_user):
         start_page = StartPage(mozwebqa)
         new_username = "Testbot: %s" % (datetime.now())
@@ -34,7 +29,6 @@ class TestProfilePage:
         profile_page.update_profile_name("")
         assert 'Affiliate' == profile_page.profile_username, 'Blank username did not use default value'
 
-    @destructive
     def test_edit_profiles_website(self, mozwebqa, existing_user):
         start_page = StartPage(mozwebqa)
         new_url = 'http://wiki.mozilla.org/' + datetime.utcnow().strftime("%s")
@@ -55,7 +49,6 @@ class TestProfilePage:
         profile_page.update_profile_website("")
         assert '' == profile_page.profile_website, 'Blank website was not accepted'
 
-    @destructive
     def test_verify_layout_logged_in_user(self, mozwebqa, existing_user):
         start_page = StartPage(mozwebqa)
         home_page = start_page.login(existing_user['email'], existing_user['password'])
@@ -69,7 +62,6 @@ class TestProfilePage:
         assert edit_page.stats_clicks is not None
         assert edit_page.is_milestones_section_visible()
 
-    @destructive
     def test_new_account_creation(self, mozwebqa, new_user):
         start_page = StartPage(mozwebqa)
         start_page.login(new_user['email'], new_user['password'], error=True)

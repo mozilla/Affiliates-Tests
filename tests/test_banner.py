@@ -6,12 +6,9 @@ import pytest
 
 from pages.start_page import StartPage
 
-destructive = pytest.mark.destructive
-
 
 class TestBanners:
 
-    @destructive
     @pytest.mark.xfail("'affiliates.allizom' in config.getvalue('base_url')",
                        reason="Bug 1053752 - [stage] Newly created banners don't show up on dashboard page")
     def test_user_can_create_banner(self, mozwebqa, existing_user):
