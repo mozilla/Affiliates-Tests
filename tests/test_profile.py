@@ -53,14 +53,14 @@ class TestProfilePage:
         start_page = StartPage(mozwebqa)
         home_page = start_page.login(existing_user['email'], existing_user['password'])
         edit_page = home_page.click_profile()
-        assert edit_page.is_stats_section_visible()
-        assert edit_page.is_stats_ranking_visible()
+        assert edit_page.is_stats_section_visible
+        assert edit_page.is_stats_ranking_visible
         assert edit_page.stats_ranking is not None
-        assert edit_page.is_stats_banners_visible()
+        assert edit_page.is_stats_banners_visible
         assert edit_page.stats_banners is not None
-        assert edit_page.is_stats_clicks_visible()
+        assert edit_page.is_stats_clicks_visible
         assert edit_page.stats_clicks is not None
-        assert edit_page.is_milestones_section_visible()
+        assert edit_page.is_milestones_section_visible
 
     def test_new_account_creation(self, mozwebqa, new_user):
         start_page = StartPage(mozwebqa)

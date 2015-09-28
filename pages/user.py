@@ -25,6 +25,7 @@ class EditProfile(Base):
         self.selenium.find_element(*self._edit_profile_locator).click()
         return self.EditProfileModal(self.testsetup)
 
+    @property
     def is_stats_section_visible(self):
         return self.is_element_visible(*self._stats_section_locator)
 
@@ -32,6 +33,7 @@ class EditProfile(Base):
     def stats_ranking(self):
         return self.selenium.find_element(*self._stats_ranking_locator).text
 
+    @property
     def is_stats_ranking_visible(self):
         return self.is_element_visible(*self._stats_ranking_locator)
 
@@ -39,6 +41,7 @@ class EditProfile(Base):
     def stats_banners(self):
         return self.selenium.find_element(*self._stats_banner_locator).text
 
+    @property
     def is_stats_banners_visible(self):
         return self.is_element_visible(*self._stats_banner_locator)
 
@@ -46,12 +49,15 @@ class EditProfile(Base):
     def stats_clicks(self):
         return self.selenium.find_element(*self._stats_clicks_locator).text
 
+    @property
     def is_stats_clicks_visible(self):
         return self.is_element_visible(*self._stats_clicks_locator)
 
+    @property
     def is_milestones_section_visible(self):
         return self.is_element_visible(*self._milestones_section_locator)
 
+    @property
     def is_newsletter_form_visible(self):
         return self.is_element_visible(*self._newsletter_form_locator)
 
