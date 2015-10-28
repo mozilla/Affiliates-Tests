@@ -14,7 +14,6 @@ class Home(Base):
 
     _page_header_locator = (By.CSS_SELECTOR, '.page-head .page-title')
     _about_content_nav_locator = (By.CSS_SELECTOR, 'ul#nav-main-menu li:nth-of-type(1) a')
-    _banners_list_locator = (By.CSS_SELECTOR, '.banners-list .banner')
 
     @property
     def header(self):
@@ -24,18 +23,3 @@ class Home(Base):
         self.selenium.find_element(*self._about_content_nav_locator).click()
         from pages.about import About
         return About(self.base_url, self.selenium)
-
-    @property
-    def banners(self):
-        return [self.Banners(banner) for banner in self.selenium.find_elements(*self._banners_list_locator)]
-
-    class Banners(object):
-
-        _banner_id_locator = (By.CSS_SELECTOR, 'a')
-
-        def __init__(self, banner):
-            self._root_element = banner
-
-        @property
-        def banner_link(self):
-            return self._root_element.find_element(*self._banner_id_locator).get_attribute('href')

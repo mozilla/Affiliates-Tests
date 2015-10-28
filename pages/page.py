@@ -60,7 +60,3 @@ class Page(object):
 
     def open(self, url_fragment):
         self.selenium.get(self.base_url + url_fragment)
-
-    @property
-    def get_url_current_page(self):
-        return self.selenium.current_url
