@@ -24,6 +24,8 @@ class Base(Page):
     def _hover_user_menu(self):
         username = self.selenium.find_element(*self._username_locator)
         ActionChains(self.selenium).move_to_element(username).perform()
+        WebDriverWait(self.selenium, self.timeout).until(
+            lambda d: d.execute_script('return $(":animated").length == 0;'))
 
     @property
     def is_user_logged_in(self):
