@@ -1,7 +1,0 @@
-*.swp
-*.pyc
-*.komodoproject
-*.project
-*.pydevproject
-.cache
-__pycache__
